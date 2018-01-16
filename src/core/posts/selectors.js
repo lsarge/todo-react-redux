@@ -24,17 +24,5 @@ export function getDeletedPost(state) {
 
 export const getVisiblePosts = createSelector(
   getPostList,
-  getPostFilter,
-  (posts, filter) => {
-    switch (filter) {
-      case 'active':
-        return posts.filter(post => !post.completed);
-
-      case 'completed':
-        return posts.filter(post => post.completed);
-
-      default:
-        return posts;
-    }
-  }
+  (posts) => posts
 );
