@@ -2,12 +2,13 @@ import { isAuthenticated } from 'src/core/auth';
 import App from './app';
 import SignIn from './pages/sign-in';
 import Tasks from './pages/tasks';
-
+import Posts from './pages/posts';
 
 export const paths = {
   ROOT: '/',
   SIGN_IN: '/sign-in',
-  TASKS: '/'
+  TASKS: '/',
+  POSTS: '/posts'
 };
 
 
@@ -43,6 +44,11 @@ export const getRoutes = getState => {
         path: paths.SIGN_IN,
         component: SignIn,
         onEnter: requireUnauth(getState)
+      },
+      {
+        path: paths.POSTS,
+        component: Posts,
+        onEnter: requireAuth(getState)
       }
     ]
   };
