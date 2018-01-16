@@ -20,8 +20,8 @@ class PostItem extends Component {
   }
 
   toggleStatus() {
-    let checked = !this.props.post.completed;
-    this.props.updatePost(this.props.post, {completed: checked});
+    let published = !this.props.post.published;
+    this.props.updatePost(this.props.post, {published: published});
   }
 
   render() {

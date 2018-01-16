@@ -11,7 +11,7 @@ export function updatePost(post, changes) {
   return dispatch => {
     // taskList.update(task.key, changes)
     //   .catch(error => dispatch(updateTaskError(error)));
-    return fetch()
+    return fetch('')
     // .....
   };
 }
