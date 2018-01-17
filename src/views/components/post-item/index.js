@@ -5,6 +5,7 @@ import { Post } from 'src/core/posts';
 class PostItem extends Component {
   static propTypes = {
     deletePost: PropTypes.func.isRequired,
+    toggleEditPost: PropTypes.func.isRequired,
     updatePost: PropTypes.func.isRequired,
     post: PropTypes.instanceOf(Post).isRequired,
   };
@@ -13,10 +14,16 @@ class PostItem extends Component {
     super(props, context);
     this.delete = ::this.delete;
     this.toggleStatus = ::this.toggleStatus;
+    this.toggleEditPost = ::this.toggleEditPost;
   }
 
   delete() {
     this.props.deletePost(this.props.task);
+  }
+
+  toggleEditPost(event) {
+    let isOpen = event.currentTarget.id === 'edit';
+    this.props.toggleEditPost(this.props.post, isOpen);
   }
 
   toggleStatus() {
@@ -29,7 +36,12 @@ class PostItem extends Component {
     return (
       <div className={classNames('post-item', {'post-item--completed': post.attributes.published})}>
         <div className="cell">
-        { post.attributes.title }
+        <button
+          id="edit"
+          className={classNames('btn post-item__edit-button ')}
+          onClick={this.toggleEditPost}>
+          { post.attributes.title }
+        </button>
         </div>
         <div className="cell">
           <button

@@ -6,6 +6,8 @@ import {
 
 import {
   CREATE_POST_SUCCESS,
+  EDIT_POST_START,
+  EDIT_POST_END,
   FETCH_POSTS_SUCCESS,
   FETCH_POSTS_REQUEST,
   UPDATE_POST_SUCCESS,
@@ -18,7 +20,9 @@ export const PostsState = new Record({
   filter: '',
   list: new List(),
   previous: null,
-  isLoading: false
+  isEditing: false,
+  isLoading: false,
+  selectedPost: null,
 });
 
 export function postsReducer(state = new PostsState(), {payload, type}) {
@@ -26,6 +30,18 @@ export function postsReducer(state = new PostsState(), {payload, type}) {
 
     case REQUEST_POSTS:
       return state.set('isLoading', true);
+
+    case EDIT_POST_START:
+      return state.merge({
+        'isEditing': true,
+        'selectedPost': payload
+      });
+
+    case EDIT_POST_END:
+      return state.merge({
+        'isEditing': false,
+        'selectedPost': null
+      });
 
     case FETCH_POSTS_SUCCESS:
       return state.merge({

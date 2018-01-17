@@ -33,15 +33,14 @@ export class App extends Component {
 
   render() {
     const { router } = this.context;
-    console.log('router', router);
     const { path } = this.props;
-    console.log('path', path);
     return (
       <div>
         <Header
           authenticated={this.props.auth.authenticated}
           signOut={this.props.signOut}
         />
+
         <nav>
           <ul className="main-nav g-row nav-list">
             <li><Link activeClassName="active" to={{pathname: '/'}}>Tasks</Link></li>

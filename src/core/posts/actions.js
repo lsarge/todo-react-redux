@@ -3,6 +3,8 @@ import { getDeletedTask } from './selectors';
 import {
   CREATE_POST_ERROR,
   CREATE_POST_SUCCESS,
+  EDIT_POST_START,
+  EDIT_POST_END,
   FETCH_POSTS_SUCCESS,
   UPDATE_POST_SUCCESS,
   REQUEST_POSTS
@@ -69,6 +71,16 @@ export function createPostSuccess(post) {
     type: CREATE_POST_SUCCESS,
     payload: post
   };
+}
+
+export function toggleEditPost(post, isOpen) {
+  console.log('post', post);
+  console.log('isOpen', isOpen);
+  let type = isOpen ? EDIT_POST_START : EDIT_POST_END;
+  return {
+    type: type,
+    payload: post
+  }
 }
 
 export function loadPostsSuccess(posts) {
