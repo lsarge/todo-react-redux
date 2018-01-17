@@ -1,0 +1,10 @@
+.nav-list {
+  padding-left: 15px;
+  list-style-type: none;
+  li {
+    display: inline-block;
+    &:not(:first-child) {
+      margin-left: 12px;
+    }
+  }
+}

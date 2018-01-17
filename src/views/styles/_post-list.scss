@@ -4,4 +4,8 @@
 
 .post-list {
   border-top: 1px dotted #666;
+  margin-top: 40px;
+  @include media-query(540) {
+    margin-top: 80px;
+  }
 }
