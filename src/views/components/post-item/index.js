@@ -20,22 +20,27 @@ class PostItem extends Component {
   }
 
   toggleStatus() {
-    let published = !this.props.post.published;
-    this.props.updatePost(this.props.post, {published: published});
+    let { published } = this.props.post.attributes;
+    this.props.updatePost(this.props.post, {published: !published});
   }
 
   render() {
-    //const { editing } = this.state;
     const { post } = this.props;
-    console.log('post', post)
-
     return (
-      <div>
-      {post.attributes.title}
+      <div className={classNames('post-item', {'post-item--completed': post.attributes.published})}>
+        <div className="cell">
+        { post.attributes.title }
+        </div>
+        <div className="cell">
           <button
+            className={classNames('btn post-item__button')}
             onClick={this.toggleStatus}
             type="button">
+            <svg className={classNames('icon', {'icon--active': post.attributes.published})} width="24" height="24" viewBox="0 0 24 24">
+              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+            </svg>
           </button>
+          </div>
       </div>
     );
   }

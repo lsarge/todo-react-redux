@@ -19,15 +19,18 @@ export class Posts extends Component {
     const { dispatch } = this.props
     this.props.fetchPosts();
   }
+  
   render() {
     const { posts, updatePost, deletePost, isLoading } = this.props;
     return (
-      <div>
-        <PostList
-          posts={posts}
-          updatePost={updatePost}
-          deletePost={deletePost}
+      <div className="g-row">
+        <div className="g-col">
+          <PostList
+            posts={posts}
+            updatePost={updatePost}
+            deletePost={deletePost}
           />
+        </div>
       </div>
     )
   }
@@ -48,8 +51,5 @@ const mapDispatchToProps = Object.assign(
   {},
   postsActions
 );
-
-
-console.log('mapDispatchToProps', mapDispatchToProps);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)

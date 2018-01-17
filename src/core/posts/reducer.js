@@ -8,6 +8,7 @@ import {
   CREATE_POST_SUCCESS,
   FETCH_POSTS_SUCCESS,
   FETCH_POSTS_REQUEST,
+  UPDATE_POST_SUCCESS,
   REQUEST_POSTS
 } from './action-types';
 
@@ -30,6 +31,15 @@ export function postsReducer(state = new PostsState(), {payload, type}) {
       return state.merge({
         'list': new List(payload.reverse()),
         'isLoading': false
+      });
+
+    case UPDATE_POST_SUCCESS:
+      return state.merge({
+        deleted: null,
+        previous: null,
+        list: state.list.map(post => {
+          return post.id === payload.id ? payload : post;
+        })
       });
 
     default:
