@@ -1,13 +1,18 @@
 import classNames from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import { Post } from 'src/core/posts';
 
 class PostItem extends Component {
   static propTypes = {
     deletePost: PropTypes.func.isRequired,
     toggleEditPost: PropTypes.func.isRequired,
     updatePost: PropTypes.func.isRequired,
-    post: PropTypes.instanceOf(Post).isRequired,
+    post: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      attributes: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        body: PropTypes.string.isRequired,
+      })
+    }).isRequired,
   };
 
   constructor(props, context) {
