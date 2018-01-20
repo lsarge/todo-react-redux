@@ -1,5 +1,3 @@
-import { getDeletedTask } from './selectors';
-
 import {
   CREATE_POST_ERROR,
   CREATE_POST_SUCCESS,
@@ -23,6 +21,7 @@ export function updatePost(post, changes) {
       }
     }
   }
+  
   return dispatch => {
     return fetch(self, {
       method: 'put',
@@ -74,8 +73,6 @@ export function createPostSuccess(post) {
 }
 
 export function toggleEditPost(post, isOpen) {
-  console.log('post', post);
-  console.log('isOpen', isOpen);
   let type = isOpen ? EDIT_POST_START : EDIT_POST_END;
   return {
     type: type,
@@ -83,10 +80,11 @@ export function toggleEditPost(post, isOpen) {
   }
 }
 
-export function loadPostsSuccess(posts) {
+export function loadPostsSuccess(posts, filter) {
   return {
     type: FETCH_POSTS_SUCCESS,
-    payload: posts
+    payload: posts,
+    filter
   };
 }
 
@@ -97,15 +95,15 @@ export function updatePostSuccess(post) {
   };
 }
 
-export function fetchPosts() {
+export function fetchPosts(filter) {
   return dispatch => {
-    dispatch(requestPosts())
+    dispatch(requestPosts(filter))
     return fetch('http://localhost:4000/api/v1/posts', {
       headers: {
         'Content-Type': 'application/vnd.api+json'
       }
     })
     .then(response => response.json())
-    .then(json => dispatch(loadPostsSuccess(json.data)));
+    .then(json => dispatch(loadPostsSuccess(json.data, filter)));
   }
 }

@@ -24,7 +24,6 @@ function PostList({deletePost, toggleEditPost, updatePost, posts}) {
 
 PostList.propTypes = {
   deletePost: PropTypes.func.isRequired,
-  posts: PropTypes.instanceOf(List).isRequired,
   updatePost: PropTypes.func.isRequired
 };
 

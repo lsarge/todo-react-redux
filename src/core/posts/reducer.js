@@ -1,4 +1,4 @@
-import { List, Record } from 'immutable';
+import { combineReducers } from 'redux';
 
 import {
   SIGN_OUT_SUCCESS
@@ -14,51 +14,50 @@ import {
   REQUEST_POSTS
 } from './action-types';
 
-
-export const PostsState = new Record({
-  deleted: null,
-  filter: '',
-  list: new List(),
-  previous: null,
-  isEditing: false,
-  isLoading: false,
-  selectedPost: null,
-});
-
-export function postsReducer(state = new PostsState(), {payload, type}) {
-  switch (type) {
-
-    case REQUEST_POSTS:
-      return state.set('isLoading', true);
-
-    case EDIT_POST_START:
-      return state.merge({
-        'isEditing': true,
-        'selectedPost': payload
-      });
-
-    case EDIT_POST_END:
-      return state.merge({
-        'isEditing': false,
-        'selectedPost': null
-      });
-
+const postsById = (state = {}, action) => {
+  switch (action.type) {
     case FETCH_POSTS_SUCCESS:
-      return state.merge({
-        'list': new List(payload.reverse()),
-        'isLoading': false
+      let nextState = { ...state };
+      action.payload.forEach(post => {
+        nextState[post.id] = post;
       });
-
+      return nextState;
     case UPDATE_POST_SUCCESS:
-      return state.merge({
-        deleted: null,
-        previous: null,
-        list: state.list.map(post => {
-          return post.id === payload.id ? payload : post;
-        })
-      });
-
+      return {
+        ...state, [action.payload.id]: action.payload // `[action.payload.id]: is the post at key of id`
+      }
     default:
       return state;
   }
-}
+};
+
+const allIds = (state = [], action) => {
+  if (action.filter !== 'all') {
+    return state;
+  }
+  switch (action.type) {
+    case FETCH_POSTS_SUCCESS:
+      return action.payload.map(post => {
+        return post.id
+      }
+    );
+    default:
+      return state;
+  }
+};
+
+const idsByFilter = combineReducers({
+  all: allIds,
+});
+
+const posts = combineReducers({
+  postsById,
+  idsByFilter,
+});
+
+export default posts;
+
+export const getVisiblePosts = (state, filter) => {
+  const ids = state.idsByFilter[filter];
+  return ids.map(id => state.postsById[id]);
+};

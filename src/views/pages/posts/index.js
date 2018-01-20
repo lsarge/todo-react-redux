@@ -1,5 +1,6 @@
 import { List } from 'immutable';
 import React, { Component, PropTypes } from 'react';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import Modal from 'react-modal';
@@ -12,8 +13,15 @@ export class Posts extends Component {
 
   static propTypes = {
     fetchPosts: PropTypes.func.isRequired,
-    posts: PropTypes.instanceOf(List).isRequired,
-    isLoading: PropTypes.bool.isRequired,
+    posts: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      attributes: PropTypes.shape({
+        body: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        published: PropTypes.bool.isRequired,
+      })
+    })).isRequired,
+    filter: PropTypes.oneOf(['all', 'published', 'draft']).isRequired,
   }
 
   closeModal(event) {
@@ -24,16 +32,17 @@ export class Posts extends Component {
   }
 
   componentWillMount() {
-    const { dispatch } = this.props
-    this.props.fetchPosts();
+    const { dispatch, filter } = this.props;
+    this.props.fetchPosts(filter);
   }
 
   render() {
-    const { posts, toggleEditPost, updatePost, deletePost, isLoading, isEditing } = this.props;
+    const { posts, toggleEditPost, updatePost, deletePost, isEditing, ...rest } = this.props;
     return (
       <div className="g-row">
         <div className="g-col">
           <PostList
+            {...rest}
             posts={posts}
             updatePost={updatePost}
             toggleEditPost={toggleEditPost}
@@ -54,23 +63,20 @@ export class Posts extends Component {
   }
 }
 
-const isLoading = state => state.posts.isLoading
 const isEditing = state => state.posts.isEditing
 
-const mapStateToProps = createSelector(
-  getVisiblePosts,
-  isLoading,
-  isEditing,
-  (posts, isLoading, isEditing) => ({
-    posts,
-    isLoading,
-    isEditing
-  })
-);
+const mapStateToProps = (state, { params }) => {
+  const filter = params.filter || 'all';
+
+  return {
+    posts: getVisiblePosts(state, filter),
+    filter,
+  };
+};
 
 const mapDispatchToProps = Object.assign(
   {},
   postsActions
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Posts)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts))
