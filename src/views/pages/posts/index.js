@@ -3,14 +3,13 @@ import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import Modal from 'react-modal';
+import Modal from '../../containers/modal';
 
 import PostList from '../../components/post-list';
 
 import { postsActions, getVisiblePosts } from 'src/core/posts';
 
 export class Posts extends Component {
-
   static propTypes = {
     fetchPosts: PropTypes.func.isRequired,
     posts: PropTypes.arrayOf(PropTypes.shape({
@@ -22,6 +21,10 @@ export class Posts extends Component {
       })
     })).isRequired,
     filter: PropTypes.oneOf(['all', 'published', 'draft']).isRequired,
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   closeModal(event) {
@@ -37,28 +40,22 @@ export class Posts extends Component {
   }
 
   render() {
-    const { posts, toggleEditPost, updatePost, deletePost, isEditing, ...rest } = this.props;
+    const { posts, updatePost, openEditModal, deletePost, isEditing, ...rest } = this.props;
     return (
-      <div className="g-row">
-        <div className="g-col">
-          <PostList
-            {...rest}
-            posts={posts}
-            updatePost={updatePost}
-            toggleEditPost={toggleEditPost}
-            deletePost={deletePost}
-          />
+      <div>
+        <div className="g-row">
+          <div className="g-col">
+            <PostList
+              {...rest}
+              posts={posts}
+              updatePost={updatePost}
+              toggleEditPost={openEditModal}
+              deletePost={deletePost}
+            />
+          </div>
         </div>
-        <Modal
-          isOpen={isEditing}
-          backdropClosesModal
-          onRequestClose={() => this.closeModal()}
-          ariaHideApp={false}>
-
-          <a href="" onClick={(event) => this.closeModal(event)} className="close">close</a>
-        </Modal>
+        <Modal />
       </div>
-
     )
   }
 }

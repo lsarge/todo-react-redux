@@ -6,3 +6,4 @@ export const REQUEST_POSTS = 'REQUEST_POSTS';
 export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
 export const EDIT_POST_START = 'EDIT_POST_START';
 export const EDIT_POST_END = 'EDIT_POST_END';
+export const OPEN_MODAL = 'OPEN_MODAL';

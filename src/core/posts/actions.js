@@ -3,6 +3,7 @@ import {
   CREATE_POST_SUCCESS,
   EDIT_POST_START,
   EDIT_POST_END,
+  OPEN_MODAL,
   FETCH_POSTS_SUCCESS,
   UPDATE_POST_SUCCESS,
   REQUEST_POSTS
@@ -21,7 +22,7 @@ export function updatePost(post, changes) {
       }
     }
   }
-  
+
   return dispatch => {
     return fetch(self, {
       method: 'put',
@@ -70,6 +71,16 @@ export function createPostSuccess(post) {
     type: CREATE_POST_SUCCESS,
     payload: post
   };
+}
+
+export function openEditModal(post) {
+  return {
+    type: OPEN_MODAL,
+    payload: {
+      modalType: 'EDIT_MODAL',
+      modalProps: post,
+    }
+  }
 }
 
 export function toggleEditPost(post, isOpen) {
