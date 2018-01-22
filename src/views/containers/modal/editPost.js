@@ -1,20 +1,37 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { List } from 'immutable';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { modalActions } from 'src/core/modal';
 
-function EditModal(props) {
-  
-  const { title, body } = props.attributes;
+import RemoteSubmitForm, { RemoteSubmitButton } from '../../components/form'
 
-  return (
-    <div className={classNames('modal-backdrop')}>
-      <div className={classNames('modal-content')}>
-        <button>close</button>
-        <h1>{title}</h1>
-        <p>{ body }</p>
+export class EditModal extends Component {
+  static propTypes = {
+
+  }
+
+
+  render() {
+    console.log('props of edit modal', this.props);
+    const { title, body } = this.props.attributes;
+    return (
+      <div className={classNames('modal-backdrop')}>
+        <div className={classNames('modal-content')}>
+          <h1>{ title }</h1>
+          <p>{ body }</p>
+          <RemoteSubmitForm />
+          <RemoteSubmitButton />
+        </div>
       </div>
-    </div>
-  );
+    )
+  }
 }
 
-export default EditModal;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    // id: ownProps.id
+  };
+};
+
+export default connect()(EditModal)

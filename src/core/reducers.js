@@ -5,6 +5,8 @@ import { notificationReducer } from './notification';
 import { tasksReducer } from './tasks';
 import { postsReducer } from './posts';
 import { modalReducer } from './modal';
+import { reducer as reduxFormReducer } from 'redux-form';
+
 
 export default combineReducers({
   auth: authReducer,
@@ -12,5 +14,6 @@ export default combineReducers({
   routing: routerReducer,
   tasks: tasksReducer,
   posts: postsReducer,
+  form: reduxFormReducer,
   modal: modalReducer,
 });

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import Modal from '../../containers/modal';
-
+import RemoteSubmitForm, { RemoteSubmitButton } from '../../components/form'
 import PostList from '../../components/post-list';
 
 import { postsActions, getVisiblePosts } from 'src/core/posts';

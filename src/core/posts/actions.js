@@ -78,7 +78,7 @@ export function openEditModal(post) {
     type: OPEN_MODAL,
     payload: {
       modalType: 'EDIT_MODAL',
-      modalProps: post,
+      modalData: post,
     }
   }
 }

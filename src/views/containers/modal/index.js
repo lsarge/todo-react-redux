@@ -12,14 +12,14 @@ const MODAL_COMPONENTS = {
 }
 
 const ModalRoot = (props) => {
-  const { modalType, modalProps, children } = props;
+  const { modalType, modalData, children } = props;
   console.log('modalType in container', modalType)
   if (!modalType) {
     return <span /> // after React v15 you can return null here
   }
 
   const SpecificModal = MODAL_COMPONENTS[modalType]
-  return <SpecificModal {...modalProps} />
+  return <SpecificModal {...modalData} />
 
 }
 

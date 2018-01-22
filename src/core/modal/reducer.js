@@ -1,11 +1,12 @@
 import {
   OPEN_MODAL,
-  CLOSE_MODAL
+  CLOSE_MODAL,
+  SUBMIT_MODAL_FORM,
 } from './action-types';
 
 const initialState = {
   modalType: null,
-  modalProps: {}
+  modalData: {}
 }
 
 export function modalReducer(state = initialState, action) {
@@ -14,9 +15,17 @@ export function modalReducer(state = initialState, action) {
       return {
         ...state,
         modalType: action.payload.modalType,
-        modalProps: action.payload.modalProps
+        modalData: action.payload.modalData
     }
+
     case CLOSE_MODAL:
+      return {
+        ...state,
+        modalType: null,
+        modalData: null
+      }
+
+    case SUBMIT_MODAL_FORM:
       return state;
 
     default:
