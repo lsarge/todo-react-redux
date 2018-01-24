@@ -1,22 +1,20 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-
 import { submit } from 'src/core/form'
 
 export RemoteSubmitButton from './remoteSubmitButton'
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => {
-  console.log('input', input)
   return (
-  <div>
-    <label>{label}</label>
     <div>
-      <input {...input} placeholder={label} type={type} />
-      {touched && error && <span>{error}</span>}
+      <label>{label}</label>
+      <div>
+        <input {...input} placeholder={label} type={type} />
+        {touched && error && <span>{error}</span>}
+      </div>
     </div>
-  </div>
-)
+  )
 }
 
 const renderTextarea = ({ input, label, type, meta: { touched, error } }) => (
@@ -30,8 +28,6 @@ const renderTextarea = ({ input, label, type, meta: { touched, error } }) => (
 );
 
 let RemoteSubmitForm = props => {
-
-
   const { error, handleSubmit } = props;
   return (
     <form onSubmit={handleSubmit}>
@@ -56,13 +52,14 @@ let RemoteSubmitForm = props => {
 };
 
 const mapStateToProps = state => {
+  const { id } = state.modal;
   return {
-    initialValues: state.modal.modalData.attributes
+    initialValues: state.posts.postsById[id].attributes
   }
 }
 
 RemoteSubmitForm = reduxForm({
-  form: 'remoteSubmit', // a unique identifier for this form
+  form: 'remoteSubmit',
   onSubmit: submit,
 })(RemoteSubmitForm);
 

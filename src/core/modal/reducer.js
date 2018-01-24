@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   modalType: null,
-  modalData: {}
+  id: null
 }
 
 export function modalReducer(state = initialState, action) {
@@ -15,8 +15,8 @@ export function modalReducer(state = initialState, action) {
       return {
         ...state,
         modalType: action.payload.modalType,
-        modalData: action.payload.modalData
-    }
+        id: action.payload.id
+      }
 
     case CLOSE_MODAL:
       return {

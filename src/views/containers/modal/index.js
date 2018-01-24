@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import editPost from './editPost'
-
+import { modalActions }  from 'src/core/modal';
 // import DeletePostModal from './DeletePostModal'
 // import ConfirmLogoutModal from './ConfirmLogoutModal'
 
@@ -12,17 +12,20 @@ const MODAL_COMPONENTS = {
 }
 
 const ModalRoot = (props) => {
-  const { modalType, modalData, children } = props;
-  console.log('modalType in container', modalType)
+  const { modalType, modalData, children, closeModal } = props;
   if (!modalType) {
     return <span /> // after React v15 you can return null here
   }
 
   const SpecificModal = MODAL_COMPONENTS[modalType]
-  return <SpecificModal {...modalData} />
-
+  return <SpecificModal  closeModal={closeModal} />
 }
+
+const mapDispatchToProps = Object.assign({},
+  modalActions
+)
 
 export default connect(
   state => state.modal,
+  mapDispatchToProps
 )(ModalRoot)

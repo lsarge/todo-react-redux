@@ -14,8 +14,7 @@ const RemoteSubmitButton = ({ dispatch }) => (
   <button
     type="button"
     style={style}
-    onClick={() => dispatch(submit('remoteSubmit'))}
-  >
+    onClick={() => dispatch(submit('remoteSubmit'))}>
     Submit
   </button>
 );

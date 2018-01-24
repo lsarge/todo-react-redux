@@ -28,7 +28,7 @@ class PostItem extends Component {
 
   toggleEditPost(event) {
     let isOpen = event.currentTarget.id === 'edit';
-    this.props.toggleEditPost(this.props.post, isOpen);
+    this.props.toggleEditPost(this.props.post.id, isOpen);
   }
 
   toggleStatus() {
