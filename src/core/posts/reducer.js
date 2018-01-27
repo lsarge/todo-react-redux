@@ -11,7 +11,8 @@ import {
   FETCH_POSTS_SUCCESS,
   FETCH_POSTS_REQUEST,
   UPDATE_POST_SUCCESS,
-  REQUEST_POSTS
+  REQUEST_POSTS,
+  SUBMIT_FORM
 } from './action-types';
 
 const postsById = (state = {}, action) => {
@@ -22,10 +23,17 @@ const postsById = (state = {}, action) => {
         nextState[post.id] = post;
       });
       return nextState;
+
     case UPDATE_POST_SUCCESS:
       return {
         ...state, [action.payload.id]: action.payload // `[action.payload.id]: is the post at key of id`
       }
+
+    case SUBMIT_FORM:
+      return {
+        ...state
+      }
+
     default:
       return state;
   }

@@ -6,11 +6,12 @@ import {
   OPEN_MODAL,
   FETCH_POSTS_SUCCESS,
   UPDATE_POST_SUCCESS,
-  REQUEST_POSTS
+  REQUEST_POSTS,
+  SUBMIT_FORM
 } from './action-types';
 
 export function updatePost(post, changes) {
-  let { published } = changes;
+  let { published, title, body } = changes;
   let { self } = post.links;
   let { id } = post;
   let data = {
@@ -18,7 +19,9 @@ export function updatePost(post, changes) {
       id,
       type: 'posts',
       attributes: {
-        published
+        published,
+        title,
+        body,
       }
     }
   }
@@ -100,10 +103,15 @@ export function loadPostsSuccess(posts, filter) {
 }
 
 export function updatePostSuccess(post) {
+  console.log('post in payload', post);
   return {
     type: UPDATE_POST_SUCCESS,
     payload: post
   };
+}
+
+export function submitForm(values, dispatch, props) {
+  return dispatch(updatePost(props, values));
 }
 
 export function fetchPosts(filter) {

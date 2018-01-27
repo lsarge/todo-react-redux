@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { submit } from 'src/core/form'
+import { postsActions } from 'src/core/posts'
 
 export RemoteSubmitButton from './remoteSubmitButton'
 
@@ -10,7 +10,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => {
     <div>
       <label>{label}</label>
       <div>
-        <input {...input} placeholder={label} type={type} />
+        <input {...input} placeholder={label} type={type} className="post-item__input" />
         {touched && error && <span>{error}</span>}
       </div>
     </div>
@@ -21,7 +21,13 @@ const renderTextarea = ({ input, label, type, meta: { touched, error } }) => (
   <div>
     <label>{label}</label>
     <div>
-      <textarea {...input}  rows="4" cols="50" placeholder={label} type={type} style={{resize: 'none'}} />
+      <textarea {...input}
+        className="post-item__textarea"
+        rows="2"
+        cols="50"
+        placeholder={label}
+        type={type}
+        style={{resize: 'none'}} />
       {touched && error && <span>{error}</span>}
     </div>
   </div>
@@ -53,14 +59,19 @@ let RemoteSubmitForm = props => {
 
 const mapStateToProps = state => {
   const { id } = state.modal;
+  const { links } = state.posts.postsById[id];
+  const { attributes } = state.posts.postsById[id];
+
   return {
-    initialValues: state.posts.postsById[id].attributes
+    id,
+    links,
+    initialValues: attributes,
   }
 }
 
 RemoteSubmitForm = reduxForm({
   form: 'remoteSubmit',
-  onSubmit: submit,
+  onSubmit: postsActions.submitForm,
 })(RemoteSubmitForm);
 
 

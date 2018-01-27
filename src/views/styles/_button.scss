@@ -18,3 +18,16 @@
   width: 40px;
   height: 40px;
 }
+
+.form-submit {
+  background: #ccc;
+  border-radius: 100px;
+
+  &:hover {
+    background: #999;
+  }
+  
+  &:active {
+    background: #ccc;
+  }
+}
