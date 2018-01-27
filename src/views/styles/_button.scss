@@ -23,11 +23,15 @@
   background: #ccc;
   border-radius: 100px;
 
-  &:hover {
+  &:hover:enabled {
     background: #999;
   }
-  
+
   &:active {
     background: #ccc;
+  }
+
+  &:focus:enabled {
+    background: #999;
   }
 }

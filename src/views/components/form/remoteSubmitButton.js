@@ -11,14 +11,23 @@ const style = {
   fontSize: '16px',
 };
 
-const RemoteSubmitButton = ({ dispatch }) => (
-  <button
-    className={classNames('btn form-submit')}
-    type="button"
-    style={style}
-    onClick={() => dispatch(submit('remoteSubmit'))}>
-    Submit
-  </button>
-);
+const RemoteSubmitButton = ( props ) => {
+const { hasErrors } = props;
+  return  (
+    <button
+      disabled={hasErrors}
+      tabIndex="0"
+      className={classNames('btn form-submit')}
+      type="button"
+      style={style}
+      onClick={() => dispatch(submit('remoteSubmit'))}>
+      Submit
+    </button>
+  )
+};
 
-export default connect()(RemoteSubmitButton);
+export default connect((state) => {
+  return {
+    hasErrors: !!state.form.remoteSubmit.syncErrors
+  }
+})(RemoteSubmitButton);

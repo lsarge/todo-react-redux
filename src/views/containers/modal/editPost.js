@@ -11,12 +11,13 @@ const pStyle = {
 
 export class EditModal extends Component {
   render() {
+    const enabled = false;
     return (
       <div className={classNames('modal-backdrop')}>
         <div className={classNames('modal-content')}>
             <button onClick={this.props.closeModal} style={pStyle}>close</button>
           <RemoteSubmitForm />
-          <RemoteSubmitButton />
+          <RemoteSubmitButton enabled={enabled} />
         </div>
       </div>
     )

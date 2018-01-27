@@ -65,14 +65,14 @@ export function createPost(title) {
 export function createPostError(error) {
   return {
     type: CREATE_POST_ERROR,
-    payload: error
+    payload: error,
   };
 }
 
 export function createPostSuccess(post) {
   return {
     type: CREATE_POST_SUCCESS,
-    payload: post
+    payload: post,
   };
 }
 
@@ -90,7 +90,7 @@ export function toggleEditPost(post, isOpen) {
   let type = isOpen ? EDIT_POST_START : EDIT_POST_END;
   return {
     type: type,
-    payload: post
+    payload: post,
   }
 }
 
@@ -98,15 +98,14 @@ export function loadPostsSuccess(posts, filter) {
   return {
     type: FETCH_POSTS_SUCCESS,
     payload: posts,
-    filter
+    filter,
   };
 }
 
 export function updatePostSuccess(post) {
-  console.log('post in payload', post);
   return {
     type: UPDATE_POST_SUCCESS,
-    payload: post
+    payload: post,
   };
 }
 
@@ -119,8 +118,8 @@ export function fetchPosts(filter) {
     dispatch(requestPosts(filter))
     return fetch('http://localhost:4000/api/v1/posts', {
       headers: {
-        'Content-Type': 'application/vnd.api+json'
-      }
+        'Content-Type': 'application/vnd.api+json',
+      },
     })
     .then(response => response.json())
     .then(json => dispatch(loadPostsSuccess(json.data, filter)));
