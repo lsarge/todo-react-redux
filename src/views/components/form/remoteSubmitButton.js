@@ -12,7 +12,8 @@ const style = {
 };
 
 const RemoteSubmitButton = ( props ) => {
-const { hasErrors } = props;
+const { hasErrors, pristine } = props;
+console.log('pristine', pristine);
   return  (
     <button
       disabled={hasErrors}
@@ -26,8 +27,11 @@ const { hasErrors } = props;
   )
 };
 
-export default connect((state) => {
+const mapStateToProps = state => {
   return {
-    hasErrors: !!state.form.remoteSubmit.syncErrors
+    hasErrors: !!state.form.remoteSubmit.syncErrors,
+    pristine: state.form.remoteSubmit.pristine
   }
-})(RemoteSubmitButton);
+}
+
+export default connect(mapStateToProps)(RemoteSubmitButton);

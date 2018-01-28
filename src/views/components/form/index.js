@@ -7,64 +7,98 @@ export RemoteSubmitButton from './remoteSubmitButton'
 
 const required = value => (value ? undefined : 'Required')
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => {
+const renderField = ({ placeholder, input, label, type, meta: { touched, error } }) => {
   return (
     <div className="form-field">
       <label>{label}</label>
       <div>
-        <input {...input} placeholder={label} type={type} className="post-item__input" />
+        <input {...input}
+          autoComplete="off"
+          placeholder={placeholder}
+          type={type}
+          className="post-item__input"
+          />
         {touched && error && <span className="validation-error">{error}</span>}
       </div>
     </div>
   )
 }
 
-const renderTextarea = ({ input, label, type, meta: { touched, error } }) => (
+const renderTextarea = ({ placeholder, input, label, type, meta: { touched, error } }) => (
   <div className="form-field">
     <label>{label}</label>
     <div>
       <textarea {...input}
         className="post-item__textarea"
-        rows="2"
+        rows="4"
         cols="50"
-        placeholder={label}
+        placeholder={placeholder}
         type={type}
         style={{resize: 'none'}} />
-      {touched && error && <span className="validation-error">{error}</span>}
+        {touched && error && <span className="validation-error">{error}</span>}
     </div>
   </div>
 );
 
-let RemoteSubmitForm = props => {
-  const { error, handleSubmit, syncErrors } = props;
+const RenderResponseMessage = ({submitSucceeded}) => {
+  return (
+    <div>{submitSucceeded && <span>succeeed</span>}</div>
+  )
+}
 
-  console.log('props', props);
+let RemoteSubmitForm = props => {
+  const {
+    error,
+    handleSubmit,
+    pristine,
+    reset,
+    submitSucceeded,
+    submitting,
+    syncErrors,
+  } = props;
+
 
   return (
     <form onSubmit={handleSubmit}>
+      <RenderResponseMessage submitSucceeded={submitSucceeded} />
       <Field
         name="title"
         type="text"
         validate={[required]}
         component={renderField}
-        label="title"
+        label="Title"
+        placeholder="Enter title"
       />
       <Field
         name="body"
         type="textarea"
         validate={[required]}
         component={renderTextarea}
-        label="body"
+        label="Body"
+        placeholder="Enter body text"
       />
       {error && <strong>{error}</strong>}
+      <div>
+        <button
+          className="btn form-submit"
+          type="submit"
+          disabled={pristine || submitting}>
+          Submit
+        </button>
+        <button
+          className="btn form-submit"
+          type="button"
+          disabled={pristine}
+          onClick={reset}>
+          Reset Values
+        </button>
+      </div>
     </form>
   );
 };
 
 const mapStateToProps = state => {
-  const { id } = state.modal;
-  const { links } = state.posts.postsById[id];
-  const { attributes } = state.posts.postsById[id];
+  const { id, links, attributes } = state.posts.selectedPost.post;
   return {
     id,
     links,

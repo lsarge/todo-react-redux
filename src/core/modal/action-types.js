@@ -1,3 +1,4 @@
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const SUBMIT_MODAL_FORM = 'SUBMIT_MODAL_FORM';
+export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';

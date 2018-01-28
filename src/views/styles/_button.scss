@@ -20,8 +20,13 @@
 }
 
 .form-submit {
+  padding: 10px 20px;
   background: #ccc;
   border-radius: 100px;
+  color: white;
+  &:enabled {
+    background: #000;
+  }
 
   &:hover:enabled {
     background: #999;
@@ -34,4 +39,8 @@
   &:focus:enabled {
     background: #999;
   }
+}
+
+.form-submit:not(:first-child) {
+  margin-left: 15px;
 }

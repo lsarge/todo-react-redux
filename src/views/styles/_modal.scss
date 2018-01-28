@@ -12,7 +12,15 @@
 
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto;
   padding: 20px;
-  width: 80%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  @include media-query(540) {
+    margin: 15% auto;
+    position: relative;
+    width: 80%;
+    max-width: 700px;
+  }
 }

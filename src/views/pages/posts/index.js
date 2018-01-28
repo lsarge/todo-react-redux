@@ -45,6 +45,9 @@ export class Posts extends Component {
       <div>
         <div className="g-row">
           <div className="g-col">
+            <div style={{marginTop: '20px'}}>
+              <button className="btn add-post">Add a Post</button>
+            </div>
             <PostList
               {...rest}
               posts={posts}

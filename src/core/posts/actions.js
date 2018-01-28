@@ -76,12 +76,12 @@ export function createPostSuccess(post) {
   };
 }
 
-export function openEditModal(id) {
+export function openEditModal(post) {
   return {
     type: OPEN_MODAL,
     payload: {
       modalType: 'EDIT_MODAL',
-      id,
+      post,
     }
   }
 }

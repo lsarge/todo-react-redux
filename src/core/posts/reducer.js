@@ -54,11 +54,25 @@ const allIds = (state = [], action) => {
   }
 };
 
+const selectedPost = (state = {}, action ) => {
+  switch (action.type) {
+    case 'OPEN_MODAL':
+    console.log('open_modal', action.payload)
+      return {
+        ...state,
+        post: action.payload.post
+      }
+    default:
+      return state
+  }
+}
+
 const idsByFilter = combineReducers({
   all: allIds,
 });
 
 const posts = combineReducers({
+  selectedPost,
   postsById,
   idsByFilter,
 });
