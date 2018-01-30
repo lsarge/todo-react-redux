@@ -3,14 +3,15 @@ import { List } from 'immutable';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
-import RemoteSubmitForm from '../../components/form'
+import { PostForm } from '../../components/form'
 
 const pStyle = {
   float: 'right',
 };
 
-export class EditModal extends Component {
+export class PostFormModal extends Component {
   render() {
+    console.log('edit modal props', this.props);
     return (
       <div className={classNames('modal-backdrop')}>
         <div className={classNames('modal-content')}>
@@ -19,7 +20,7 @@ export class EditModal extends Component {
             style={pStyle}>
             close
           </button>
-          <RemoteSubmitForm />
+          <PostForm />
         </div>
       </div>
     )
@@ -28,4 +29,4 @@ export class EditModal extends Component {
 
 
 
-export default connect()(EditModal)
+export default connect()(PostFormModal)

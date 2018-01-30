@@ -11,20 +11,21 @@ import { postsActions, getVisiblePosts } from 'src/core/posts';
 
 export class Posts extends Component {
   static propTypes = {
+    addPost: PropTypes.func.isRequired,
     fetchPosts: PropTypes.func.isRequired,
-    posts: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      attributes: PropTypes.shape({
-        body: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        published: PropTypes.bool.isRequired,
-      })
-    })).isRequired,
+    posts: PropTypes.instanceOf(List).isRequired,
     filter: PropTypes.oneOf(['all', 'published', 'draft']).isRequired,
   }
 
   constructor(props) {
-    super(props)
+    super(props);
+    this.addPost = ::this.addPost;
+  }
+
+  addPost() {
+    console.log('addPost');
+    console.log(this);
+    this.props.addPost(this.props.post);
   }
 
   closeModal(event) {
@@ -41,12 +42,14 @@ export class Posts extends Component {
 
   render() {
     const { posts, updatePost, openEditModal, deletePost, isEditing, ...rest } = this.props;
+
+    console.log('posts', posts);
     return (
       <div>
         <div className="g-row">
           <div className="g-col">
             <div style={{marginTop: '20px'}}>
-              <button className="btn add-post">Add a Post</button>
+              <button className="btn add-post" onClick={this.addPost}>Add a Post</button>
             </div>
             <PostList
               {...rest}

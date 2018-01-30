@@ -10,6 +10,46 @@ import {
   SUBMIT_FORM
 } from './action-types';
 
+export function addPost() {
+  return {
+    type: OPEN_MODAL,
+    payload: {
+      modalType: 'POST_FORM',
+    }
+  }
+}
+
+
+export function createPost(post) {
+  const { title, body } = post.values;
+  // debugger;
+  let data = {
+    data: {
+      type: 'posts',
+      attributes: {
+        title,
+        body,
+        published: false,
+      },
+    }
+  }
+
+  return dispatch => {
+    return fetch('http://localhost:4000/api/v1/posts', {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/vnd.api+json',
+        'Accept': 'application/vnd.api+json'
+      }
+    })
+    .then(response => response.json())
+    .then(json => console.log(data.json))
+    .catch(error => console.log(error));
+  }
+
+}
+
 export function updatePost(post, changes) {
   let { published, title, body } = changes;
   let { self } = post.links;
@@ -55,13 +95,6 @@ function requestPosts() {
   }
 }
 
-export function createPost(title) {
-  return dispatch => {
-    postList.push({completed: false, title})
-      .catch(error => dispatch(createPostError(error)));
-  };
-}
-
 export function createPostError(error) {
   return {
     type: CREATE_POST_ERROR,
@@ -76,21 +109,13 @@ export function createPostSuccess(post) {
   };
 }
 
-export function openEditModal(post) {
+export function editPost(post) {
   return {
     type: OPEN_MODAL,
     payload: {
-      modalType: 'EDIT_MODAL',
+      modalType: 'POST_FORM',
       post,
     }
-  }
-}
-
-export function toggleEditPost(post, isOpen) {
-  let type = isOpen ? EDIT_POST_START : EDIT_POST_END;
-  return {
-    type: type,
-    payload: post,
   }
 }
 
@@ -109,8 +134,9 @@ export function updatePostSuccess(post) {
   };
 }
 
+
 export function submitForm(values, dispatch, props) {
-  return dispatch(updatePost(props, values));
+  return props.id ? dispatch(updatePost(props, values)) : dispatch(createPost(props, values));
 }
 
 export function fetchPosts(filter) {

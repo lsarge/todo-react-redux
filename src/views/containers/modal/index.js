@@ -1,14 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import editPost from './editPost'
+import postFormModal from './postFormModal'
 import { modalActions }  from 'src/core/modal';
-// import DeletePostModal from './DeletePostModal'
-// import ConfirmLogoutModal from './ConfirmLogoutModal'
 
 const MODAL_COMPONENTS = {
-  'EDIT_MODAL': editPost,
+  'POST_FORM': postFormModal,
   // 'CONFIRM_LOGOUT': ConfirmLogoutModal,
-  /* other modals */
 }
 
 const ModalRoot = (props) => {

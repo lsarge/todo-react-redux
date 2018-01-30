@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
+import { Record, List, Map, fromJS } from 'immutable';
+
 import {
   SIGN_OUT_SUCCESS
 } from 'src/core/auth';
@@ -15,18 +17,26 @@ import {
   SUBMIT_FORM
 } from './action-types';
 
-const postsById = (state = {}, action) => {
+import { Post } from './post';
+
+export const PostsState = new Record({
+  idsByFilter: new Map(),
+  postsById: new Map(),
+  selectedPost: null,
+});
+
+const postsById = (state = new PostsState(), action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
       let nextState = { ...state };
       action.payload.forEach(post => {
-        nextState[post.id] = post;
+        nextState[post.id] = new Post(post);
       });
       return nextState;
 
     case UPDATE_POST_SUCCESS:
       return {
-        ...state, [action.payload.id]: action.payload // `[action.payload.id]: is the post at key of id`
+        ...state, [action.payload.id]: new Post(action.payload)  // `[action.payload.id]: is the post at key of id`
       }
 
     case SUBMIT_FORM:
@@ -57,7 +67,6 @@ const allIds = (state = [], action) => {
 const selectedPost = (state = {}, action ) => {
   switch (action.type) {
     case 'OPEN_MODAL':
-    console.log('open_modal', action.payload)
       return {
         ...state,
         post: action.payload.post

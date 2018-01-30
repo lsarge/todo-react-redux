@@ -1,34 +1,29 @@
 import classNames from 'classnames';
 import React, { Component, PropTypes } from 'react';
+import { Record } from 'immutable'
 
 class PostItem extends Component {
   static propTypes = {
     deletePost: PropTypes.func.isRequired,
-    toggleEditPost: PropTypes.func.isRequired,
+    editPost: PropTypes.func.isRequired,
     updatePost: PropTypes.func.isRequired,
-    post: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      attributes: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        body: PropTypes.string.isRequired,
-      })
-    }).isRequired,
+    post: PropTypes.instanceOf(Record).isRequired,
   };
 
   constructor(props, context) {
     super(props, context);
     this.delete = ::this.delete;
     this.toggleStatus = ::this.toggleStatus;
-    this.toggleEditPost = ::this.toggleEditPost;
+    this.editPost = ::this.editPost;
   }
 
   delete() {
     this.props.deletePost(this.props.task);
   }
 
-  toggleEditPost(event) {
+  editPost(event) {
     let isOpen = event.currentTarget.id === 'edit';
-    this.props.toggleEditPost(this.props.post, isOpen);
+    this.props.editPost(this.props.post);
   }
 
   toggleStatus() {
@@ -41,12 +36,12 @@ class PostItem extends Component {
     return (
       <div className={classNames('post-item', {'post-item--completed': post.attributes.published})}>
         <div className="cell">
-        <button
-          id="edit"
-          className={classNames('btn post-item__edit-button ')}
-          onClick={this.toggleEditPost}>
-          { post.attributes.title }
-        </button>
+          <button
+            id="edit"
+            className={classNames('btn post-item__edit-button ')}
+            onClick={this.editPost}>
+            { post.attributes.title }
+          </button>
         </div>
         <div className="cell">
           <button
@@ -57,7 +52,7 @@ class PostItem extends Component {
               <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
             </svg>
           </button>
-          </div>
+        </div>
       </div>
     );
   }
