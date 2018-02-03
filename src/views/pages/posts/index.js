@@ -23,8 +23,6 @@ export class Posts extends Component {
   }
 
   addPost() {
-    console.log('addPost');
-    console.log(this);
     this.props.addPost(this.props.post);
   }
 

@@ -22,7 +22,6 @@ export function addPost() {
 
 export function createPost(post) {
   const { title, body } = post.values;
-  // debugger;
   let data = {
     data: {
       type: 'posts',
@@ -44,7 +43,7 @@ export function createPost(post) {
       }
     })
     .then(response => response.json())
-    .then(json => console.log(data.json))
+    .then(json => dispatch(createPostSuccess(json.data)))
     .catch(error => console.log(error));
   }
 
@@ -102,10 +101,12 @@ export function createPostError(error) {
   };
 }
 
-export function createPostSuccess(post) {
+export function createPostSuccess(post, filter) {
+  filter = filter || 'all'; // not sure how to deal with this
   return {
     type: CREATE_POST_SUCCESS,
     payload: post,
+    filter,
   };
 }
 
@@ -142,7 +143,7 @@ export function submitForm(values, dispatch, props) {
 export function fetchPosts(filter) {
   return dispatch => {
     dispatch(requestPosts(filter))
-    return fetch('http://localhost:4000/api/v1/posts', {
+    return fetch('http://localhost:4000/api/v1/posts?sort=-created_at', {
       headers: {
         'Content-Type': 'application/vnd.api+json',
       },

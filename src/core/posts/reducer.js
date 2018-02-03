@@ -34,6 +34,12 @@ const postsById = (state = new PostsState(), action) => {
       });
       return nextState;
 
+    case CREATE_POST_SUCCESS:
+    console.log('fdasf')
+      return {
+        ...state, [action.payload.id]: new Post(action.payload)  // `[action.payload.id]: is the post at key of id`
+      }
+
     case UPDATE_POST_SUCCESS:
       return {
         ...state, [action.payload.id]: new Post(action.payload)  // `[action.payload.id]: is the post at key of id`
@@ -59,6 +65,10 @@ const allIds = (state = [], action) => {
         return post.id
       }
     );
+
+    case CREATE_POST_SUCCESS:
+      return [action.payload.id, ...state]
+
     default:
       return state;
   }

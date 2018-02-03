@@ -3,6 +3,7 @@ import {
   CLOSE_MODAL,
   SUBMIT_MODAL_FORM,
   UPDATE_POST_SUCCESS,
+  CREATE_POST_SUCCESS,
 } from './action-types';
 
 const initialState = {
@@ -26,6 +27,7 @@ export function modalReducer(state = initialState, action) {
         modalData: null
       }
 
+    case CREATE_POST_SUCCESS:
     case UPDATE_POST_SUCCESS:
       return {
         ...state,
