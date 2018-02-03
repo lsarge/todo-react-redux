@@ -63,7 +63,11 @@ config.sassLoader = {
 //-------------------------------------
 if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
   config.entry = {
-    main: ['./src/main.js']
+    main: [
+      '!!style!css!react-mdl/extra/material.min.css',
+      'react-mdl/extra/material.min.js',
+      './src/main.js',
+    ]
   };
 
   config.output = {

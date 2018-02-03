@@ -1,25 +1,23 @@
 import React, { Component, PropTypes } from 'react';
-import { List } from 'immutable';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
-
+import { Button } from 'react-mdl';
 import { PostForm } from '../../components/form'
 
 const pStyle = {
   float: 'right',
+  marginBottom: '20px',
 };
 
 export class PostFormModal extends Component {
   render() {
-    console.log('edit modal props', this.props);
     return (
       <div className={classNames('modal-backdrop')}>
         <div className={classNames('modal-content')}>
-          <button
-            onClick={this.props.closeModal}
-            style={pStyle}>
+          <Button
+            style={pStyle}
+            onClick={this.props.closeModal}>
             close
-          </button>
+          </Button>
           <PostForm />
         </div>
       </div>
@@ -27,6 +25,4 @@ export class PostFormModal extends Component {
   }
 }
 
-
-
-export default connect()(PostFormModal)
+export default PostFormModal;

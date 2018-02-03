@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { Button } from 'react-mdl';
 import { postsActions } from 'src/core/posts'
 
 const required = value => (value ? undefined : 'Required')
@@ -77,19 +78,17 @@ let RemoteSubmitForm = props => {
       />
       {error && <strong>{error}</strong>}
       <div>
-        <button
-          className="btn form-submit"
+        <Button
           type="submit"
           disabled={pristine || submitting}>
           Submit
-        </button>
-        <button
-          className="btn form-submit"
+        </Button>
+        <Button
           type="button"
           disabled={pristine}
           onClick={reset}>
           Reset Values
-        </button>
+        </Button>
       </div>
     </form>
   );

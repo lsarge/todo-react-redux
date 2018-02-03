@@ -37,6 +37,7 @@ class PostItem extends Component {
       <div className={classNames('post-item', {'post-item--completed': post.attributes.published})}>
         <div className="cell">
           <button
+            tabIndex="0"
             id="edit"
             className={classNames('btn post-item__edit-button ')}
             onClick={this.editPost}>
