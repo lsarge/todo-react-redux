@@ -5,6 +5,7 @@ import { notificationReducer } from './notification';
 import { tasksReducer } from './tasks';
 import { postsReducer } from './posts';
 import { modalReducer } from './modal';
+import { uploaderReducer } from './uploader';
 import { reducer as reduxFormReducer } from 'redux-form';
 
 
@@ -16,4 +17,5 @@ export default combineReducers({
   posts: postsReducer,
   form: reduxFormReducer,
   modal: modalReducer,
+  uploader: uploaderReducer
 });

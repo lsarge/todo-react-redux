@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button } from 'react-mdl';
 import { postsActions } from 'src/core/posts'
+import Uploader from'../../containers/uploader';
 
 const required = value => (value ? undefined : 'Required')
 
@@ -45,6 +46,7 @@ const RenderResponseMessage = ({submitSucceeded}) => {
   )
 }
 
+
 let RemoteSubmitForm = props => {
   const {
     error,
@@ -56,41 +58,43 @@ let RemoteSubmitForm = props => {
     syncErrors,
   } = props;
 
-
   return (
-    <form onSubmit={handleSubmit}>
-      <RenderResponseMessage submitSucceeded={submitSucceeded} />
-      <Field
-        name="title"
-        type="text"
-        validate={[required]}
-        component={renderField}
-        label="Title"
-        placeholder="Enter title"
-      />
-      <Field
-        name="body"
-        type="textarea"
-        validate={[required]}
-        component={renderTextarea}
-        label="Body"
-        placeholder="Enter body text"
-      />
-      {error && <strong>{error}</strong>}
-      <div>
-        <Button
-          type="submit"
-          disabled={pristine || submitting}>
-          Submit
-        </Button>
-        <Button
-          type="button"
-          disabled={pristine}
-          onClick={reset}>
-          Reset Values
-        </Button>
-      </div>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <RenderResponseMessage submitSucceeded={submitSucceeded} />
+        <Field
+          name="title"
+          type="text"
+          validate={[required]}
+          component={renderField}
+          label="Title"
+          placeholder="Enter title"
+        />
+        <Field
+          name="body"
+          type="textarea"
+          validate={[required]}
+          component={renderTextarea}
+          label="Body"
+          placeholder="Enter body text"
+        />
+        {error && <strong>{error}</strong>}
+        <div>
+          <Button
+            type="submit"
+            disabled={pristine || submitting}>
+            Submit
+          </Button>
+          <Button
+            type="button"
+            disabled={pristine}
+            onClick={reset}>
+            Reset Values
+          </Button>
+        </div>
+      </form>
+      <Uploader />
+    </div>
   );
 };
 
