@@ -14,20 +14,20 @@ export class App extends Component {
   };
 
   static propTypes = {
-    auth: PropTypes.object.isRequired,
+    home: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
     signOut: PropTypes.func.isRequired
   };
 
   componentWillReceiveProps(nextProps) {
     const { router } = this.context;
-    const { auth } = this.props;
+    const { home } = this.props;
 
-    if (auth.authenticated && !nextProps.auth.authenticated) {
+    if (home.loggedIn && !nextProps.home.loggedIn) {
       router.replace(paths.SIGN_IN);
     }
-    else if (!auth.authenticated && nextProps.auth.authenticated) {
-      router.replace(paths.TASKS);
+    else if (!home.loggedIn && nextProps.home.loggedIn) {
+      router.replace(paths.POSTS);
     }
   }
 
@@ -37,7 +37,7 @@ export class App extends Component {
     return (
       <div>
         <Header
-          authenticated={this.props.auth.authenticated}
+          authenticated={this.props.home.loggedIn}
           signOut={this.props.signOut}
         />
 
@@ -61,7 +61,7 @@ export class App extends Component {
 
 const mapStateToProps = createSelector(
   getAuth,
-  auth => ({auth})
+  home => ({home})
 );
 
 export default connect(

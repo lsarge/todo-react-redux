@@ -12,7 +12,8 @@ import {
   SIGN_OUT_SUCCESS,
   CHANGE_FORM,
   SENDING_REQUEST,
-  SET_ERROR_MESSAGE
+  SET_ERROR_MESSAGE,
+  SET_AUTH
 } from './action-types';
 
 
@@ -98,8 +99,6 @@ export function login(username, password) {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
         return;
       }
-
-
       // Use auth.js to fake a request
       // auth.login(username, hash, (success, err) => {
       //   // When the request is finished, hide the loading indicator
@@ -126,10 +125,7 @@ export function login(username, password) {
       //     }
       //   }
       // });
-
-      console.log(username, hash);
       const user = {user: {email: username, password: hash}};
-
       return fetch('http://localhost:4000/users/login', {
         'method': 'POST',
         'headers' : {
@@ -141,11 +137,11 @@ export function login(username, password) {
         return response.json();
       })
       .then(function(data) {
-        console.log('data-------------', data);
         localStorage.setItem('token', data.auth_token);
+        return dispatch(setAuthState(true))
       })
       .catch(function(error) {
-        console.log('error -------------------', error);
+        console.log(error);
       })
     });
   }
@@ -169,14 +165,21 @@ export function logout() {
   }
 }
 
+
+/**
+ * Sets the authentication state of the application
+ * @param {boolean} newState True means a user is logged in, false means no user is logged in
+ */
+export function setAuthState(newState) {
+  return { type: SET_AUTH, newState };
+}
+
 /**
  * Registers a user
  * @param  {string} username The username of the new user
  * @param  {string} password The password of the new user
  */
 export function register(username, password) {
-
-  console.log('username', username);
   return (dispatch) => {
     // Show the loading indicator, hide the last error
     dispatch(sendingRequest(true));
@@ -235,16 +238,9 @@ export function register(username, password) {
         .catch(function(error) {
           console.log('error -------------', error);
         })
+
     });
   }
-}
-
-/**
- * Sets the authentication state of the application
- * @param {boolean} newState True means a user is logged in, false means no user is logged in
- */
-export function setAuthState(newState) {
-  return { type: SET_AUTH, newState };
 }
 
 /**

@@ -57,7 +57,6 @@ class SignIn extends React.Component {
 
 
 function select(state) {
-  console.log('state in sing-in', state);
   return {
     data: state.home
   };

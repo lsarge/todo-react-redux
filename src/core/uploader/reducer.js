@@ -3,8 +3,6 @@ import {
 } from './action-types';
 
 const uploads = (state = {}, action) => {
-  console.log('action payload', action);
-
   switch (action.type) {
     case UPLOAD_COMPLETE:
     return {

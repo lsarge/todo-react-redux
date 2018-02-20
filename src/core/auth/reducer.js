@@ -52,11 +52,15 @@ export function homeReducer(state = initialState, action) {
       });
       break;
     case SET_AUTH:
+      console.log('action.newState ---------------------------', action.newState);
+      debugger;
+
       return Object.assign({}, state, {
         loggedIn: action.newState
       });
       break;
     case SENDING_REQUEST:
+    console.log('SENDING_REQUEST');
       return Object.assign({}, state, {
         currentlySending: action.sending
       });
