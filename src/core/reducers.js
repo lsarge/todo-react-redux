@@ -1,6 +1,6 @@
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import { authReducer } from './auth';
+import { homeReducer } from './auth';
 import { notificationReducer } from './notification';
 import { tasksReducer } from './tasks';
 import { postsReducer } from './posts';
@@ -10,7 +10,7 @@ import { reducer as reduxFormReducer } from 'redux-form';
 
 
 export default combineReducers({
-  auth: authReducer,
+  home: homeReducer,
   notification: notificationReducer,
   routing: routerReducer,
   tasks: tasksReducer,

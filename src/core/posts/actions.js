@@ -20,7 +20,7 @@ export function addPost() {
 }
 
 
-export function createPost(post) {
+export function createPost(post, user) {
   const { title, body } = post.values;
   let data = {
     data: {
@@ -38,8 +38,8 @@ export function createPost(post) {
       method: 'post',
       body: JSON.stringify(data),
       headers: {
-        'Content-Type': 'application/vnd.api+json',
-        'Accept': 'application/vnd.api+json'
+        'Content-Type': 'application/json',
+
       }
     })
     .then(response => response.json())

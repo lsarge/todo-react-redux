@@ -1,6 +1,7 @@
 import { isAuthenticated } from 'src/core/auth';
 import App from './app';
 import SignIn from './pages/sign-in';
+import Register from './pages/register';
 import Tasks from './pages/tasks';
 import Posts from './pages/posts';
 
@@ -36,14 +37,19 @@ export const getRoutes = getState => {
     childRoutes: [
       {
         indexRoute: {
-          component: Tasks,
+          component: Posts,
           onEnter: requireAuth(getState)
         }
       },
+      // {
+      //   path: paths.SIGN_IN,
+      //   component: SignIn,
+      //   onEnter: requireUnauth(getState)
+      // },
       {
-        path: paths.SIGN_IN,
-        component: SignIn,
-        onEnter: requireUnauth(getState)
+          path: paths.SIGN_IN,
+          component: SignIn,
+          onEnter: requireUnauth(getState)
       },
       {
         path: paths.POSTS,

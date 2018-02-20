@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "babel-polyfill": "~6.13.0",
+    "bcryptjs": "^2.4.3",
     "classnames": "~2.2.5",
     "immutable": "~3.8.1",
     "react": "~15.3.2",
@@ -75,6 +76,7 @@
     "postcss-loader": "~0.13.0",
     "react-addons-test-utils": "~15.3.2",
     "react-hot-loader": "3.0.0-beta.5",
+    "react-mdl": "^1.11.0",
     "react-modal": "^3.1.11",
     "react-s3-uploader": "^4.6.2",
     "sass-loader": "~4.0.2",

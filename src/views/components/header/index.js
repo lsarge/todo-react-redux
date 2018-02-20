@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 
 
-const Header = ({authenticated, signOut}) => {
+const Header = () => {
   return (
     <header className="header">
       <div className="g-row">
         <div className="g-col">
           <ul className="header__actions">
-            {authenticated ? <li><button className="btn" onClick={signOut}>Sign out</button></li> : null}
+            {<li><button className="btn" >Sign out</button></li>}
           </ul>
         </div>
       </div>
@@ -16,7 +16,7 @@ const Header = ({authenticated, signOut}) => {
 };
 
 Header.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
+
   signOut: PropTypes.func.isRequired
 };
 

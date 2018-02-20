@@ -28,6 +28,7 @@ export class Tasks extends Component {
   };
 
   componentWillMount() {
+    debugger;
     this.props.loadTasks();
     this.props.filterTasks(this.props.location.query.filter);
   }

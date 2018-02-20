@@ -1,25 +1,70 @@
-import { Record } from 'immutable';
-import { INIT_AUTH, SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS } from './action-types';
+// import { Record } from 'immutable';
+// import { INIT_AUTH, SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS } from './action-types';
+//
+//
+// export const AuthState = new Record({
+//   authenticated: false,
+//   id: null
+// });
+//
+//
+// export function authReducer(state = new AuthState(), {payload, type}) {
+//   switch (type) {
+//     case INIT_AUTH:
+//     case SIGN_IN_SUCCESS:
+//       return state.merge({
+//         authenticated: !!payload,
+//         id: payload ? payload.uid : null
+//       });
+//
+//     case SIGN_OUT_SUCCESS:
+//       return new AuthState();
+//
+//     default:
+//       return state;
+//   }
+// }
 
 
-export const AuthState = new Record({
-  authenticated: false,
-  id: null
-});
+import { CHANGE_FORM, SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE } from './action-types';
+// Object.assign is not yet fully supported in all browsers, so we fallback to
+// a polyfill
+// const assign = Object.assign || require('object.assign');
+import auth from '../utils/auth';
 
+// The initial application state
+const initialState = {
+  formState: {
+    username: '',
+    password: ''
+  },
+  currentlySending: false,
+  loggedIn: auth.loggedIn(),
+  errorMessage: ''
+};
 
-export function authReducer(state = new AuthState(), {payload, type}) {
-  switch (type) {
-    case INIT_AUTH:
-    case SIGN_IN_SUCCESS:
-      return state.merge({
-        authenticated: !!payload,
-        id: payload ? payload.uid : null
+// Takes care of changing the application state
+export function homeReducer(state = initialState, action) {
+  switch (action.type) {
+    case CHANGE_FORM:
+      return Object.assign({}, state, {
+        formState: action.newState
       });
-
-    case SIGN_OUT_SUCCESS:
-      return new AuthState();
-
+      break;
+    case SET_AUTH:
+      return Object.assign({}, state, {
+        loggedIn: action.newState
+      });
+      break;
+    case SENDING_REQUEST:
+      return Object.assign({}, state, {
+        currentlySending: action.sending
+      });
+      break;
+    case SET_ERROR_MESSAGE:
+      return Object.assign({}, state, {
+        errorMessage: action.message
+      });
     default:
       return state;
   }
