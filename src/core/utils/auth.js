@@ -22,7 +22,6 @@ var auth = {
     request.post('/login', { username, password }, (response) => {
       // If the user was authenticated successfully, save a random token to the
       // localStorage
-      debugger
       if (response.authenticated) {
         localStorage.token = response.token;
         callback(true);
