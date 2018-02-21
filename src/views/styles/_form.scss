@@ -122,12 +122,15 @@ label {
   animation: shake 150ms ease-in-out;
 }
 
+<<<<<<< HEAD
 /* Change the white to any color ;) */
 input:-webkit-autofill {
     // -webkit-box-shadow: 0 0 0 30px white inset;
     background-color: transparent !important;
 }
 
+=======
+>>>>>>> create note
 @keyframes shake {
   0% {
     transform: translateX(0);
