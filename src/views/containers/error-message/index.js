@@ -15,9 +15,11 @@ ErrorMessage.propTypes = {
 	errorMessage: PropTypes.string
 };
 
-const mapStateToProps = (state) => ({
-	errorMessage: state.errorMessage
-});
+const mapStateToProps = (state) => {
+	return {
+		errorMessage: state.auth.errorMessage,
+	}
+};
 
 ErrorMessage = connect(mapStateToProps)(ErrorMessage);
 

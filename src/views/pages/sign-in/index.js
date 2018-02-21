@@ -19,17 +19,22 @@ class SignIn extends React.Component {
     const { formState, currentlySending } = this.props.data;
 
     return (
-      <div className="g-row sign-in">
-        <Form
-          data={formState}
-          dispatch={dispatch}
-          location={location}
-          history={this.props.history}
-          onSubmit={::this._login}
-          btnText={"Login"}
-          currentlySending={currentlySending}
-          />
+      <div className="form-page__wrapper">
+        <div className="form-page__form-wrapper">
+          <div className="form-page__form-header">
+            <h2 className="form-page__form-heading">Sign In</h2>
+          </div>
+          <Form
+            data={formState}
+            dispatch={dispatch}
+            location={location}
+            history={this.props.history}
+            onSubmit={::this._login}
+            btnText={"Login"}
+            currentlySending={currentlySending}
+            />
         </div>
+      </div>
       );
     }
 }

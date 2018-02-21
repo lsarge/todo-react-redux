@@ -20,33 +20,29 @@ export function addPost() {
 }
 
 
-export function createPost(post, user) {
-  const { title, body } = post.values;
+export function createPost(props, user) {
+  const { token } = props;
+  const { title, body } = props.values;
   let data = {
-    data: {
-      type: 'posts',
-      attributes: {
-        title,
-        body,
-        published: false,
-      },
+    note: {
+      title,
+      content: body,
     }
   }
 
   return dispatch => {
-    return fetch('http://localhost:4000/api/v1/posts', {
+    return fetch('http://localhost:4000/notes', {
       method: 'post',
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
-
+        'Authorization': token,
       }
     })
     .then(response => response.json())
     .then(json => dispatch(createPostSuccess(json.data)))
     .catch(error => console.log(error));
   }
-
 }
 
 export function updatePost(post, changes) {
@@ -121,7 +117,6 @@ export function editPost(post) {
 }
 
 export function loadPostsSuccess(posts, filter) {
-  console.log('posts ---------', posts);
   return {
     type: FETCH_POSTS_SUCCESS,
     payload: posts,
@@ -138,13 +133,14 @@ export function updatePostSuccess(post) {
 
 
 export function submitForm(values, dispatch, props) {
+  const { id, token } = props;
   return props.id ? dispatch(updatePost(props, values)) : dispatch(createPost(props, values));
 }
 
 export function fetchPosts(filter, auth) {
-  console.log('auth', auth);
   return dispatch => {
-    dispatch(requestPosts(filter))
+    dispatch(requestPosts
+      (filter))
     return fetch('http://localhost:4000/notes', {
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +148,7 @@ export function fetchPosts(filter, auth) {
       }
     })
       .then(response => response.json())
-      .then(json => dispatch(loadPostsSuccess(json.data, filter)))
+      .then(json => dispatch(loadPostsSuccess(json, filter)))
       .catch(error => console.log('error', error));
   }
 }

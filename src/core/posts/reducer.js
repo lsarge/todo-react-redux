@@ -35,7 +35,6 @@ const postsById = (state = new PostsState(), action) => {
       return nextState;
 
     case CREATE_POST_SUCCESS:
-    console.log('fdasf')
       return {
         ...state, [action.payload.id]: new Post(action.payload)  // `[action.payload.id]: is the post at key of id`
       }

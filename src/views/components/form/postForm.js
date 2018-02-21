@@ -49,6 +49,7 @@ const RenderResponseMessage = ({submitSucceeded}) => {
 
 let RemoteSubmitForm = props => {
   const {
+    token,
     error,
     handleSubmit,
     pristine,
@@ -57,6 +58,8 @@ let RemoteSubmitForm = props => {
     submitting,
     syncErrors,
   } = props;
+
+  console.log(token);
 
   return (
     <div>
@@ -107,7 +110,12 @@ const mapStateToProps = state => {
       initialValues: attributes,
     }
   }
-  return {}
+
+  const { token } = state.auth;
+
+  return {
+    token,
+  }
 }
 
 RemoteSubmitForm = reduxForm({

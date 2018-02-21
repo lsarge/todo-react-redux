@@ -41,8 +41,6 @@ export class Posts extends Component {
 
   render() {
     const { posts, updatePost, openEditModal, deletePost, isEditing, ...rest } = this.props;
-
-    console.log('posts', posts);
     return (
       <div>
         <div className="g-row">

@@ -135,6 +135,9 @@ export function login(username, password) {
         return response.json();
       })
       .then(function(data) {
+        if (data.error && data.error.status === 422) {
+          return dispatch(setErrorMessage(errorMessages.INVALID_CREDENTIALS))
+        }
         localStorage.setItem('token', data.auth_token);
         return dispatch(setAuthState(true, data.auth_token))
       })
@@ -236,7 +239,11 @@ export function register(username, password) {
           return response.json();
         })
         .then(function(data) {
-          console.log('data------------', data);
+          if (data.error && data.error.status === 422) {
+            return dispatch(setErrorMessage(errorMessages.USERNAME_TAKEN))
+          }
+          localStorage.setItem('token', data.auth_token);
+          dispatch(setAuthState(true, data.auth_token))
         })
         .catch(function(error) {
           console.log('error -------------', error);

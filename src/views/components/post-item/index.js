@@ -34,14 +34,14 @@ class PostItem extends Component {
   render() {
     const { post } = this.props;
     return (
-      <div className={classNames('post-item', {'post-item--completed': post.attributes.published})}>
+      <div className={classNames('post-item')}>
         <div className="cell">
           <button
             tabIndex="0"
             id="edit"
             className={classNames('btn post-item__edit-button ')}
             onClick={this.editPost}>
-            { post.attributes.title }
+            { post.title }
           </button>
         </div>
         <div className="cell">
@@ -49,7 +49,7 @@ class PostItem extends Component {
             className={classNames('btn post-item__button')}
             onClick={this.toggleStatus}
             type="button">
-            <svg className={classNames('icon', {'icon--active': post.attributes.published})} width="24" height="24" viewBox="0 0 24 24">
+            <svg className={classNames('icon')} width="24" height="24" viewBox="0 0 24 24">
               <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
             </svg>
           </button>
