@@ -2,16 +2,14 @@ import { isAuthenticated } from 'src/core/auth';
 import App from './app';
 import SignIn from './pages/sign-in';
 import Register from './pages/register';
-import Tasks from './pages/tasks';
 import Posts from './pages/posts';
 
 export const paths = {
+  POSTS: '/',
   ROOT: '/',
   SIGN_IN: '/sign-in',
-  TASKS: '/',
-  POSTS: '/posts'
+  REGISTER: '/register',
 };
-
 
 const requireAuth = getState => {
   return (nextState, replace) => {
@@ -24,11 +22,10 @@ const requireAuth = getState => {
 const requireUnauth = getState => {
   return (nextState, replace) => {
     if (isAuthenticated(getState())) {
-      replace(paths.TASKS);
+      replace(paths.POSTS);
     }
   };
 };
-
 
 export const getRoutes = getState => {
   return {
@@ -41,20 +38,20 @@ export const getRoutes = getState => {
           onEnter: requireAuth(getState)
         }
       },
-      // {
-      //   path: paths.SIGN_IN,
-      //   component: SignIn,
-      //   onEnter: requireUnauth(getState)
-      // },
       {
-          path: paths.SIGN_IN,
-          component: SignIn,
-          onEnter: requireUnauth(getState)
+        path: paths.SIGN_IN,
+        component: SignIn,
+        onEnter: requireUnauth(getState)
       },
       {
         path: paths.POSTS,
         component: Posts,
         onEnter: requireAuth(getState)
+      },
+      {
+        path: paths.REGISTER,
+        component: Register,
+        onEnter: requireUnauth(getState)
       }
     ]
   };

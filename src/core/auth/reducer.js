@@ -39,12 +39,13 @@ const initialState = {
     password: ''
   },
   currentlySending: false,
-  loggedIn: auth.loggedIn(),
-  errorMessage: ''
+  authenticated: auth.authenticated(),
+  errorMessage: '',
+  token: ''
 };
 
 // Takes care of changing the application state
-export function homeReducer(state = initialState, action) {
+export function authReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_FORM:
       return Object.assign({}, state, {
@@ -53,7 +54,8 @@ export function homeReducer(state = initialState, action) {
       break;
     case SET_AUTH:
       return Object.assign({}, state, {
-        loggedIn: action.newState
+        authenticated: action.newState,
+        token: action.token,
       });
       break;
     case SENDING_REQUEST:

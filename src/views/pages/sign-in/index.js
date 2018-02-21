@@ -29,21 +29,6 @@ class SignIn extends React.Component {
           btnText={"Login"}
           currentlySending={currentlySending}
           />
-
-          <br />
-          <br />
-          <br />
-
-          <Form
-            data={formState}
-            dispatch={dispatch}
-            location={location}
-            history={this.props.history}
-            onSubmit={::this._register}
-            btnText={"Register"}
-            currentlySending={currentlySending}
-            />
-
         </div>
       );
     }
@@ -58,7 +43,7 @@ class SignIn extends React.Component {
 
 function select(state) {
   return {
-    data: state.home
+    data: state.auth
   };
 }
 

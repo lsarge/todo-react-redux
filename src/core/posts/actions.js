@@ -121,6 +121,7 @@ export function editPost(post) {
 }
 
 export function loadPostsSuccess(posts, filter) {
+  console.log('posts ---------', posts);
   return {
     type: FETCH_POSTS_SUCCESS,
     payload: posts,
@@ -140,15 +141,18 @@ export function submitForm(values, dispatch, props) {
   return props.id ? dispatch(updatePost(props, values)) : dispatch(createPost(props, values));
 }
 
-export function fetchPosts(filter) {
+export function fetchPosts(filter, auth) {
+  console.log('auth', auth);
   return dispatch => {
     dispatch(requestPosts(filter))
-    return fetch('http://localhost:4000/api/v1/posts?sort=-created_at', {
+    return fetch('http://localhost:4000/notes', {
       headers: {
-        'Content-Type': 'application/vnd.api+json',
-      },
+        'Content-Type': 'application/json',
+        'Authorization': auth,
+      }
     })
-    .then(response => response.json())
-    .then(json => dispatch(loadPostsSuccess(json.data, filter)));
+      .then(response => response.json())
+      .then(json => dispatch(loadPostsSuccess(json.data, filter)))
+      .catch(error => console.log('error', error));
   }
 }

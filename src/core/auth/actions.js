@@ -1,6 +1,4 @@
-import firebase from 'firebase';
 import bcrypt from 'bcryptjs';
-import { firebaseAuth } from 'src/core/firebase';
 import genSalt from '../utils/salt';
 import auth from '../utils/auth';
 import * as errorMessages  from './message-constants';
@@ -17,13 +15,13 @@ import {
 } from './action-types';
 
 
-function authenticate(provider) {
-  return dispatch => {
-    firebaseAuth.signInWithPopup(provider)
-      .then(result => dispatch(signInSuccess(result)))
-      .catch(error => dispatch(signInError(error)));
-  };
-}
+// function authenticate(provider) {
+//   return dispatch => {
+//     firebaseAuth.signInWithPopup(provider)
+//       .then(result => dispatch(signInSuccess(result)))
+//       .catch(error => dispatch(signInError(error)));
+//   };
+// }
 
 export function initAuth(user) {
   return {
@@ -138,7 +136,7 @@ export function login(username, password) {
       })
       .then(function(data) {
         localStorage.setItem('token', data.auth_token);
-        return dispatch(setAuthState(true))
+        return dispatch(setAuthState(true, data.auth_token))
       })
       .catch(function(error) {
         console.log(error);
@@ -170,8 +168,13 @@ export function logout() {
  * Sets the authentication state of the application
  * @param {boolean} newState True means a user is logged in, false means no user is logged in
  */
-export function setAuthState(newState) {
-  return { type: SET_AUTH, newState };
+export function setAuthState(newState, token) {
+  console.log('token', token);
+  return {
+    type: SET_AUTH,
+    newState,
+    token
+  };
 }
 
 /**

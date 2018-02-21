@@ -15,6 +15,7 @@ export class Posts extends Component {
     fetchPosts: PropTypes.func.isRequired,
     posts: PropTypes.instanceOf(List).isRequired,
     filter: PropTypes.oneOf(['all', 'published', 'draft']).isRequired,
+    token: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -34,8 +35,8 @@ export class Posts extends Component {
   }
 
   componentWillMount() {
-    const { dispatch, filter } = this.props;
-    this.props.fetchPosts(filter);
+    const { dispatch, filter, token } = this.props;
+    this.props.fetchPosts(filter, token);
   }
 
   render() {
@@ -68,10 +69,12 @@ const isEditing = state => state.posts.isEditing
 
 const mapStateToProps = (state, { params }) => {
   const filter = params.filter || 'all';
+  const token = state.auth.token;
 
   return {
     posts: getVisiblePosts(state, filter),
     filter,
+    token,
   };
 };
 

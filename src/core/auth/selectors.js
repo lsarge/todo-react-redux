@@ -1,8 +1,8 @@
 export function getAuth(state) {
-  return state.home;
+  return state.auth;
 }
 
 export function isAuthenticated(state) {
-  console.log(state);
-  return getAuth(state).loggedIn;
+  console.log('getAuth(state).authenticated',getAuth(state).authenticated)
+  return getAuth(state).authenticated;
 }
