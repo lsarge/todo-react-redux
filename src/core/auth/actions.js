@@ -11,17 +11,43 @@ import {
   CHANGE_FORM,
   SENDING_REQUEST,
   SET_ERROR_MESSAGE,
-  SET_AUTH
+  SET_AUTH,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAILURE,
+  LOGIN_USER_REQUEST,
 } from './action-types';
 
 
-// function authenticate(provider) {
-//   return dispatch => {
-//     firebaseAuth.signInWithPopup(provider)
-//       .then(result => dispatch(signInSuccess(result)))
-//       .catch(error => dispatch(signInError(error)));
-//   };
-// }
+export function registerUserSuccess() {
+
+};
+
+export function loginUserSuccess(token) {
+  localStorage.setItem('token', token);
+  return {
+    type: LOGIN_USER_SUCCESS,
+    payload: {
+      token: token
+    }
+  }
+}
+
+export function loginUserFailure(error) {
+  localStorage.removeItem('token');
+  return {
+    type: LOGIN_USER_FAILURE,
+    payload: {
+      status: error.status,
+      statusText: error.message,
+    }
+  }
+}
+
+export function loginUserRequest() {
+  return {
+    type: LOGIN_USER_REQUEST
+  }
+}
 
 export function initAuth(user) {
   return {
@@ -42,20 +68,6 @@ export function signInSuccess(result) {
     type: SIGN_IN_SUCCESS,
     payload: result.user
   };
-}
-
-export function signInWithGithub() {
-  return authenticate(new firebase.auth.GithubAuthProvider());
-}
-
-
-export function signInWithGoogle() {
-  return authenticate(new firebase.auth.GoogleAuthProvider());
-}
-
-
-export function signInWithTwitter() {
-  return authenticate(new firebase.auth.TwitterAuthProvider());
 }
 
 export function signOut() {
@@ -81,11 +93,12 @@ export function signOutSuccess() {
 export function login(username, password) {
   return (dispatch) => {
     // Show the loading indicator, hide the last error
-    dispatch(sendingRequest(true));
+    dispatch(loginUserRequest());
     // If no username or password was specified, throw a field-missing error
+
+    // TODO deal with this :(
     if (anyElementsEmpty({ username, password })) {
       dispatch(setErrorMessage(errorMessages.FIELD_MISSING));
-      dispatch(sendingRequest(false));
       return;
     }
     // Generate salt for password encryption
@@ -97,32 +110,7 @@ export function login(username, password) {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
         return;
       }
-      // Use auth.js to fake a request
-      // auth.login(username, hash, (success, err) => {
-      //   // When the request is finished, hide the loading indicator
-      //   dispatch(sendingRequest(false));
-      //   dispatch(setAuthState(success));
-      //   if (success === true) {
-      //     // If the login worked, forward the user to the dashboard and clear the form
-      //     forwardTo('/dashboard');
-      //     dispatch(changeForm({
-      //       username: "",
-      //       password: ""
-      //     }));
-      //   } else {
-      //     switch (err.type) {
-      //       case 'user-doesnt-exist':
-      //         dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
-      //         return;
-      //       case 'password-wrong':
-      //         dispatch(setErrorMessage(errorMessages.WRONG_PASSWORD));
-      //         return;
-      //       default:
-      //         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-      //         return;
-      //     }
-      //   }
-      // });
+
       const user = {user: {email: username, password: hash}};
       return fetch('http://localhost:4000/users/login', {
         'method': 'POST',
@@ -136,10 +124,9 @@ export function login(username, password) {
       })
       .then(function(data) {
         if (data.error && data.error.status === 422) {
-          return dispatch(setErrorMessage(errorMessages.INVALID_CREDENTIALS))
+          return dispatch(loginUserFailure(data.error));
         }
-        localStorage.setItem('token', data.auth_token);
-        return dispatch(setAuthState(true, data.auth_token))
+        return dispatch(loginUserSuccess(data.auth_token));
       })
       .catch(function(error) {
         console.log(error);
@@ -172,7 +159,6 @@ export function logout() {
  * @param {boolean} newState True means a user is logged in, false means no user is logged in
  */
 export function setAuthState(newState, token) {
-  console.log('token', token);
   return {
     type: SET_AUTH,
     newState,
@@ -188,11 +174,12 @@ export function setAuthState(newState, token) {
 export function register(username, password) {
   return (dispatch) => {
     // Show the loading indicator, hide the last error
-    dispatch(sendingRequest(true));
+    dispatch(loginUserRequest());
     // If no username or password was specified, throw a field-missing error
+
+    // TODO deal with this another way
     if (anyElementsEmpty({ username, password })) {
       dispatch(setErrorMessage(errorMessages.FIELD_MISSING));
-      dispatch(sendingRequest(false));
       return;
     }
     // Generate salt for password encryption
@@ -204,29 +191,7 @@ export function register(username, password) {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
         return;
       }
-      // Use auth.js to fake a request
-      // auth.register(username, hash, (success, err) => {
-      //   // When the request is finished, hide the loading indicator
-      //   dispatch(sendingRequest(false));
-      //   dispatch(setAuthState(success));
-      //   if (success) {
-      //     // If the register worked, forward the user to the homepage and clear the form
-      //     forwardTo('/dashboard');
-      //     dispatch(changeForm({
-      //       username: "",
-      //       password: ""
-      //     }));
-      //   } else {
-      //     switch (err.type) {
-      //       case 'username-exists':
-      //         dispatch(setErrorMessage(errorMessages.USERNAME_TAKEN));
-      //         return;
-      //       default:
-      //         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-      //         return;
-      //     }
-      //   }
-      // });
+
       const config = {
         method: 'POST',
         headers: {
@@ -240,10 +205,10 @@ export function register(username, password) {
         })
         .then(function(data) {
           if (data.error && data.error.status === 422) {
-            return dispatch(setErrorMessage(errorMessages.USERNAME_TAKEN))
+            return dispatch(loginUserFailure(data.error))
           }
-          localStorage.setItem('token', data.auth_token);
-          dispatch(setAuthState(true, data.auth_token))
+          console.log(data);
+          return dispatch(loginUserSuccess(data.auth_token))
         })
         .catch(function(error) {
           console.log('error -------------', error);

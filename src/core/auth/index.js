@@ -20,7 +20,7 @@ export function initAuth(dispatch) {
           'Authorization': token,
         },
       })
-      .then(handleRepsone.bind(this, dispatch, resolve, reject, token))
+      .then(handleResponse.bind(this, dispatch, resolve, reject, token))
       .catch(function(error) {
         console.log('error', error);
       })
@@ -28,9 +28,12 @@ export function initAuth(dispatch) {
   });
 }
 
-function handleRepsone(dispatch, resolve, reject, token, response) {
+function handleResponse(dispatch, resolve, reject, token, response) {
   if (response.status === 200) {
-    dispatch(authActions.setAuthState(true, token));
+    dispatch(authActions.loginUserSuccess(token));
+    resolve();
+  } else if (response.status === 401) {
+    dispatch(authActions.loginUserFailure(token));
     resolve();
   } else {
     reject();

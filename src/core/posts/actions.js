@@ -11,10 +11,24 @@ import {
 } from './action-types';
 
 export function addPost() {
+  console.log('adding')
   return {
     type: OPEN_MODAL,
     payload: {
       modalType: 'POST_FORM',
+    }
+  }
+}
+
+
+export function editPost(post) {
+  console.log('editing', post)
+
+  return {
+    type: OPEN_MODAL,
+    payload: {
+      modalType: 'POST_FORM',
+      post,
     }
   }
 }
@@ -40,38 +54,33 @@ export function createPost(props, user) {
       }
     })
     .then(response => response.json())
-    .then(json => dispatch(createPostSuccess(json.data)))
+    .then(data => dispatch(createPostSuccess(data)))
     .catch(error => console.log(error));
   }
 }
 
-export function updatePost(post, changes) {
-  let { published, title, body } = changes;
-  let { self } = post.links;
-  let { id } = post;
+export function updatePost(props, changes) {
+
+  let {  title, content } = changes;
+  let { id, token } = props;
+
   let data = {
-    data: {
-      id,
-      type: 'posts',
-      attributes: {
-        published,
-        title,
-        body,
-      }
-    }
+    title,
+    content,
+    id,
   }
 
   return dispatch => {
-    return fetch(self, {
+    return fetch(`http://localhost:4000/notes/${id}`, {
       method: 'put',
-      body: JSON.stringify(data),
       headers: {
-        'Content-Type': 'application/vnd.api+json',
-        'Accept': 'application/vnd.api+json'
-      }
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: JSON.stringify(data),
     })
     .then(response => response.json())
-    .then(json => dispatch(updatePostSuccess(json.data)));
+    .then(data => dispatch(updatePostSuccess(data)));
   };
 }
 
@@ -106,16 +115,6 @@ export function createPostSuccess(post, filter) {
   };
 }
 
-export function editPost(post) {
-  return {
-    type: OPEN_MODAL,
-    payload: {
-      modalType: 'POST_FORM',
-      post,
-    }
-  }
-}
-
 export function loadPostsSuccess(posts, filter) {
   return {
     type: FETCH_POSTS_SUCCESS,
@@ -125,6 +124,7 @@ export function loadPostsSuccess(posts, filter) {
 }
 
 export function updatePostSuccess(post) {
+  debugger;
   return {
     type: UPDATE_POST_SUCCESS,
     payload: post,

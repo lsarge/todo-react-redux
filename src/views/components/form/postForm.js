@@ -74,7 +74,7 @@ let RemoteSubmitForm = props => {
           placeholder="Enter title"
         />
         <Field
-          name="body"
+          name="content"
           type="textarea"
           validate={[required]}
           component={renderTextarea}
@@ -102,16 +102,19 @@ let RemoteSubmitForm = props => {
 };
 
 const mapStateToProps = state => {
+  const { token } = state.auth;
+
   if (state.posts.selectedPost.post) {
-    const { id, links, attributes } = state.posts.selectedPost.post;
+    const { id, title, content } = state.posts.selectedPost.post;
     return {
       id,
-      links,
-      initialValues: attributes,
+      initialValues: {
+        title,
+        content,
+      },
+      token,
     }
   }
-
-  const { token } = state.auth;
 
   return {
     token,

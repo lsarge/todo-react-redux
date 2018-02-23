@@ -23,7 +23,7 @@ var auth = {
       // If the user was authenticated successfully, save a random token to the
       // localStorage
       if (response.authenticated) {
-        localStorage.token = response.token;
+        localStorage.setItem('token', response.token);
         callback(true);
       } else {
         // If there was a problem authenticating the user, show an error on the
@@ -45,7 +45,7 @@ var auth = {
    * @return {boolean} True if there is a logged in user, false if there isn't
    */
   authenticated() {
-    return !!localStorage.token;
+    return !!localStorage.getItem('token');
   },
   /**
    * Registers a user in the system
