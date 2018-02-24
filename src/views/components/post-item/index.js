@@ -8,6 +8,7 @@ class PostItem extends Component {
     editPost: PropTypes.func.isRequired,
     updatePost: PropTypes.func.isRequired,
     post: PropTypes.instanceOf(Record).isRequired,
+    token: PropTypes.string.isRequired,
   };
 
   constructor(props, context) {
@@ -27,8 +28,9 @@ class PostItem extends Component {
   }
 
   toggleStatus() {
-    let { published } = this.props.post.attributes;
-    this.props.updatePost(this.props.post, {published: !published});
+    let { post, token } = this.props;
+    this.props.updatePost(post, {published: !post.published}, token);
+    debugger;
   }
 
   render() {

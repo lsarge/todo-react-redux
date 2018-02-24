@@ -59,16 +59,10 @@ export function createPost(props, user) {
   }
 }
 
-export function updatePost(props, changes) {
-
-  let {  title, content } = changes;
-  let { id, token } = props;
-
-  let data = {
-    title,
-    content,
-    id,
-  }
+export function updatePost(props, changes, token) {
+  token = token || props.token;
+  let { id } = props;
+  let data = changes;
 
   return dispatch => {
     return fetch(`http://localhost:4000/notes/${id}`, {
@@ -134,6 +128,7 @@ export function updatePostSuccess(post) {
 
 export function submitForm(values, dispatch, props) {
   const { id, token } = props;
+  debugger;
   return props.id ? dispatch(updatePost(props, values)) : dispatch(createPost(props, values));
 }
 
