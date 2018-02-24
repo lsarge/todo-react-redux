@@ -1,11 +1,12 @@
 import {
   INIT_AUTH,
+  LOGIN_USER_SUCCESS,
+  LOGOUT_USER,
   SIGN_IN_SUCCESS,
   SIGN_OUT_SUCCESS
 } from './action-types';
 
 import { authReducer } from './reducer';
-
 
 describe('Auth reducer', () => {
   describe('INIT_AUTH', () => {
@@ -14,44 +15,42 @@ describe('Auth reducer', () => {
         type: INIT_AUTH,
         payload: null
       });
-
       expect(state.authenticated).toBe(false);
-      expect(state.id).toBe(null);
-    });
-
-    it('should set AuthState.authenticated to true when payload provided', () => {
-      let state = authReducer(undefined, {
-        type: INIT_AUTH,
-        payload: {uid: '123'}
-      });
-
-      expect(state.authenticated).toBe(true);
-      expect(state.id).toBe('123');
     });
   });
 
-
-  describe('SIGN_IN_SUCCESS', () => {
+  describe('LOGIN_USER_SUCCESS', () => {
     it('should set AuthState.authenticated to true', () => {
       let state = authReducer(undefined, {
-        type: SIGN_IN_SUCCESS,
-        payload: {uid: '123'}
+        type: LOGIN_USER_SUCCESS,
+        payload: {token: null}
       });
-
       expect(state.authenticated).toBe(true);
-      expect(state.id).toBe('123');
+    });
+
+    it('should set currentlySending to false', () => {
+      let state = authReducer(undefined, {
+        type: LOGIN_USER_SUCCESS,
+        payload: {token: null}
+      });
+      expect(state.currentlySending).toBe(false);
+    });
+
+    it('should set the token to false', () => {
+      let state = authReducer(undefined, {
+        type: LOGIN_USER_SUCCESS,
+        payload: {token: '123'}
+      });
+      expect(state.token).toBe('123');
     });
   });
 
-
-  describe('SIGN_OUT_SUCCESS', () => {
-    it('should set AuthState.authenticated to false', () => {
+  describe('LOGOUT_USER', () => {
+    it('should set authenticated to false', () => {
       let state = authReducer(undefined, {
-        type: SIGN_OUT_SUCCESS
+        type: LOGOUT_USER,
       });
-
       expect(state.authenticated).toBe(false);
-      expect(state.id).toBe(null);
     });
   });
 });

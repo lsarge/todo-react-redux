@@ -151,24 +151,6 @@ export function login(username, password) {
   }
 }
 
-/**
- * Logs the current user out
- */
-// export function logout() {
-//   return (dispatch) => {
-//     dispatch(sendingRequest(true));
-//     auth.logout((success, err) => {
-//       if (success === true) {
-//         dispatch(sendingRequest(false))
-//         dispatch(setAuthState(false));
-//         browserHistory.replace(null, '/');
-//       } else {
-//         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-//       }
-//     });
-//   }
-// }
-
 
 /**
  * Sets the authentication state of the application

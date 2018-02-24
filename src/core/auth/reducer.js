@@ -7,6 +7,7 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
   LOGOUT_USER,
+  INIT_AUTH,
 } from './action-types';
 
 import auth from '../utils/auth';
@@ -26,6 +27,11 @@ const initialState = {
 // Takes care of changing the application state
 export function authReducer(state = initialState, action) {
   switch (action.type) {
+
+    case INIT_AUTH:
+      return Object.assign({}, state, {
+        authenticated: false,
+      });
 
     case LOGIN_USER_REQUEST:
       return Object.assign({}, state, {
