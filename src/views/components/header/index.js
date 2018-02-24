@@ -7,8 +7,9 @@ const Header = ({signOut, authenticated}) => {
       <div className="g-row">
         <div className="g-col">
           <ul className="header__actions">
-            { authenticated ? <li><button className="btn" >Sign out</button></li> : null }
-            { !authenticated ? <li><Link activeClassName="active" to={{pathname: '/register'}}>Register</Link></li> : null }
+            { authenticated ? <li><button className="btn" onClick={signOut}>Sign out</button></li> : null }
+            { !authenticated ? <li><Link activeClassName="active" to={{pathname: '/sign-in'}}>Sign In</Link></li> : null }
+            { !authenticated ? <li><Link activeClassName="active" to={{pathname: '/register'}}>Sign Up</Link></li> : null }
           </ul>
         </div>
       </div>

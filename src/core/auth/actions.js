@@ -15,6 +15,7 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
   LOGIN_USER_REQUEST,
+  LOGOUT_USER,
 } from './action-types';
 
 
@@ -49,6 +50,22 @@ export function loginUserRequest() {
   }
 }
 
+
+export function logout() {
+    localStorage.removeItem('token');
+    return {
+        type: LOGOUT_USER
+    }
+}
+
+export function logoutAndRedirect() {
+    return (dispatch, state) => {
+        dispatch(logout());
+      //  dispatch(pushState(null, '/sign-in'));
+    }
+}
+
+
 export function initAuth(user) {
   return {
     type: INIT_AUTH,
@@ -72,8 +89,7 @@ export function signInSuccess(result) {
 
 export function signOut() {
   return dispatch => {
-    firebaseAuth.signOut()
-      .then(() => dispatch(signOutSuccess()));
+    dispatch(logout());
   };
 }
 
@@ -138,20 +154,20 @@ export function login(username, password) {
 /**
  * Logs the current user out
  */
-export function logout() {
-  return (dispatch) => {
-    dispatch(sendingRequest(true));
-    auth.logout((success, err) => {
-      if (success === true) {
-        dispatch(sendingRequest(false))
-        dispatch(setAuthState(false));
-        browserHistory.replace(null, '/');
-      } else {
-        dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-      }
-    });
-  }
-}
+// export function logout() {
+//   return (dispatch) => {
+//     dispatch(sendingRequest(true));
+//     auth.logout((success, err) => {
+//       if (success === true) {
+//         dispatch(sendingRequest(false))
+//         dispatch(setAuthState(false));
+//         browserHistory.replace(null, '/');
+//       } else {
+//         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
+//       }
+//     });
+//   }
+// }
 
 
 /**

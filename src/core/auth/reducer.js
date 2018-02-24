@@ -6,6 +6,7 @@ import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
+  LOGOUT_USER,
 } from './action-types';
 
 import auth from '../utils/auth';
@@ -43,24 +44,16 @@ export function authReducer(state = initialState, action) {
         errorMessage: action.payload.statusText,
         currentlySending: false,
         authenticated: false,
-      })
+      });
+
+    case LOGOUT_USER:
+      return Object.assign({}, state, {
+        authenticated: false,
+      });
 
     case CHANGE_FORM:
       return Object.assign({}, state, {
         formState: action.newState
-      });
-      break;
-
-    // case SET_AUTH:
-    //   return Object.assign({}, state, {
-    //     authenticated: action.newState,
-    //     token: action.token,
-    //   });
-    //   break;
-
-    case SENDING_REQUEST:
-      return Object.assign({}, state, {
-        currentlySending: action.sending
       });
       break;
 
