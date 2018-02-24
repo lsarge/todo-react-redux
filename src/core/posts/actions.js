@@ -36,11 +36,11 @@ export function editPost(post) {
 
 export function createPost(props, user) {
   const { token } = props;
-  const { title, body } = props.values;
+  const { title, content } = props.values;
   let data = {
     note: {
       title,
-      content: body,
+      content,
     }
   }
 
