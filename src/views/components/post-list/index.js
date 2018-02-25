@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { List } from 'immutable';
 import PostItem from '../post-item';
 
-function PostList({deletePost, editPost, updatePost, posts, token}) {
+function PostList({addImage, deletePost, editPost, updatePost, posts, token}) {
   let postItems = posts.map((post, index) => (
       <PostItem
         deletePost={deletePost}
@@ -11,6 +11,7 @@ function PostList({deletePost, editPost, updatePost, posts, token}) {
         editPost={editPost}
         updatePost={updatePost}
         token={token}
+        addImage={addImage}
       />
     )
   );

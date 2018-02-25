@@ -11,7 +11,6 @@ import {
 } from './action-types';
 
 export function addPost() {
-  console.log('adding')
   return {
     type: OPEN_MODAL,
     payload: {
@@ -22,12 +21,20 @@ export function addPost() {
 
 
 export function editPost(post) {
-  console.log('editing', post)
-
   return {
     type: OPEN_MODAL,
     payload: {
       modalType: 'POST_FORM',
+      post,
+    }
+  }
+}
+
+export function addImage(post) {
+  return {
+    type: OPEN_MODAL,
+    payload: {
+      modalType: 'ADD_IMAGE',
       post,
     }
   }
@@ -110,6 +117,7 @@ export function createPostSuccess(post, filter) {
 }
 
 export function loadPostsSuccess(posts, filter) {
+  console.log('posts loaded---------', posts);
   return {
     type: FETCH_POSTS_SUCCESS,
     payload: posts,
@@ -126,10 +134,33 @@ export function updatePostSuccess(post) {
 }
 
 
-export function submitForm(values, dispatch, props) {
+export function submitPostForm(values, dispatch, props) {
   const { id, token } = props;
-  debugger;
   return props.id ? dispatch(updatePost(props, values)) : dispatch(createPost(props, values));
+}
+
+export function submitUploadForm(values, dispatch, props) {
+  const file = values.upload[0];
+  const { id, token } = props;
+
+  let formData = new FormData();
+  formData.append('note[upload]', file);
+
+  return fetch(`http://localhost:4000/notes/${id}/`, {
+    'method': 'PUT',
+    'headers': {
+      'Authorization': token,
+    },
+    'body': formData
+  }).then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    console.log(data)
+  })
+  .catch(function(error) {
+    console.log('error--------------', error);
+  })
 }
 
 export function fetchPosts(filter, auth) {

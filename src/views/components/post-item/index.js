@@ -9,6 +9,7 @@ class PostItem extends Component {
     updatePost: PropTypes.func.isRequired,
     post: PropTypes.instanceOf(Record).isRequired,
     token: PropTypes.string.isRequired,
+    addImage: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
@@ -16,6 +17,11 @@ class PostItem extends Component {
     this.delete = ::this.delete;
     this.toggleStatus = ::this.toggleStatus;
     this.editPost = ::this.editPost;
+    this.addImage = ::this.addImage;
+  }
+
+  addImage() {
+    this.props.addImage(this.props.post);
   }
 
   delete() {
@@ -53,6 +59,16 @@ class PostItem extends Component {
             type="button">
             <svg className={classNames('icon', {'icon--active': post.published})} width="24" height="24" viewBox="0 0 24 24">
               <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+            </svg>
+          </button>
+        </div>
+        <div className="cell">
+          <button
+            className={classNames('btn post-item__button')}
+            onClick={this.addImage}
+            type="button">
+            <svg className={classNames('icon', {'icon--active': post.published})} width="24" height="24" viewBox="0 0 24 24">
+              <path stroke="#ffffff" id="svg_5" d="m5.639066,12.331316l6.242495,-6.725598l6.242495,6.725598l-3.121248,0l0,6.75796l-6.242494,0l0,-6.75796l-3.121248,0z" fill="none"/>
             </svg>
           </button>
         </div>

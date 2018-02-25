@@ -123,7 +123,7 @@ const mapStateToProps = state => {
 
 RemoteSubmitForm = reduxForm({
   form: 'remoteSubmit',
-  onSubmit: postsActions.submitForm,
+  onSubmit: postsActions.submitPostForm,
 })(RemoteSubmitForm);
 
 

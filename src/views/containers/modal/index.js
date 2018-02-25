@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import postFormModal from './postFormModal'
+import addImageModal from './addImageModal'
 import { modalActions }  from 'src/core/modal';
 
 const MODAL_COMPONENTS = {
   'POST_FORM': postFormModal,
-  // 'CONFIRM_LOGOUT': ConfirmLogoutModal,
+  'ADD_IMAGE': addImageModal,
 }
 
 const ModalRoot = (props) => {
   const { modalType, modalData, children, closeModal } = props;
+
   if (!modalType) {
     return <span /> // after React v15 you can return null here
   }
