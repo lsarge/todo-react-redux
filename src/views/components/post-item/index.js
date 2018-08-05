@@ -67,8 +67,8 @@ class PostItem extends Component {
             className={classNames('btn post-item__button')}
             onClick={this.addImage}
             type="button">
-            <svg className={classNames('icon', {'icon--active': post.published})} width="24" height="24" viewBox="0 0 24 24">
-              <path stroke="#ffffff" id="svg_5" d="m5.639066,12.331316l6.242495,-6.725598l6.242495,6.725598l-3.121248,0l0,6.75796l-6.242494,0l0,-6.75796l-3.121248,0z" fill="none"/>
+            <svg className={classNames('icon icon-upload', {'icon--active': post.published})} width="24" height="24" viewBox="0 0 24 24">
+              <path id="svg_5" d="m5.639066,12.331316l6.242495,-6.725598l6.242495,6.725598l-3.121248,0l0,6.75796l-6.242494,0l0,-6.75796l-3.121248,0z" fill="none"/>
             </svg>
           </button>
         </div>
